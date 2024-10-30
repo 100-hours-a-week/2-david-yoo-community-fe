@@ -13,7 +13,7 @@
 <body>
     <header-component></header-component>
 
-    <main class="post-container">
+    <div class="post-container" role="main">
         <div class="post-header">
             <h2 class="post-title">제목 1</h2>
             <div class="post-meta">
@@ -23,19 +23,15 @@
                     <span class="post-date">2021-01-01 00:00:00</span>
                 </div>
                 <div class="action-buttons">
-                    <button class="action-btn">수정</button>
-                    <button class="action-btn">삭제</button>
+                    <button class="edit-btn">수정</button>
+                    <button class="post-delete-btn">삭제</button>
                 </div>
             </div>
         </div>
 
         <div class="post-content">
             <div class="post-image"></div>
-            <p class="post-text">
-                게시물 상세조회 테스트
-            </p>
-
-            <!-- 통계 섹션 -->
+            <p>게시물 상세조회 테스트</p>
             <div class="post-stats">
                 <div class="stat-item">
                     <span class="stat-value">123</span>
@@ -51,10 +47,9 @@
                 </div>
             </div>
 
-            <!-- 댓글 섹션 -->
             <div class="comment-section">
                 <div class="comment-input">
-                    <textarea placeholder="댓글을 남겨주세요!"></textarea>
+                    <textarea placeholder="댓글을 입력하세요"></textarea>
                     <button class="comment-submit">댓글 등록</button>
                 </div>
 
@@ -68,17 +63,41 @@
                                     <span class="comment-date">2021-01-01 00:00:00</span>
                                 </div>
                                 <div class="comment-actions">
-                                    <button>수정</button>
-                                    <button>삭제</button>
+                                    <button class="edit-btn">수정</button>
+                                    <button class="comment-delete-btn">삭제</button>
                                 </div>
                             </div>
-                            <div class="comment-text">댓글 내용</div>
+                            <div class="comment-text">
+                                댓글 내용
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+
+    <div id="postDeleteModal" class="modal-backdrop">
+        <div class="modal-container">
+            <h2 class="modal-title">게시글을 삭제하시겠습니까?</h2>
+            <p class="modal-message">삭제한 내용은 복구 할 수 없습니다.</p>
+            <div class="modal-buttons">
+                <button class="btn btn-cancel">취소</button>
+                <button class="btn btn-confirm">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="commentDeleteModal" class="modal-backdrop">
+        <div class="modal-container">
+            <h2 class="modal-title">댓글을 삭제하시겠습니까?</h2>
+            <p class="modal-message">삭제한 내용은 복구 할 수 없습니다.</p>
+            <div class="modal-buttons">
+                <button class="btn btn-cancel">취소</button>
+                <button class="btn btn-confirm">확인</button>
+            </div>
+        </div>
+    </div>
 
     <script src="../js/post-detail.js"></script>
     <script src="../components/header-component.js"></script>
