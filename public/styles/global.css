@@ -33,13 +33,14 @@ body {
 }
 
 .main-header-title {
-    font-size: 25px;
-    font-weight: 32px;
+    font-size: 32px;
+    font-weight: 400;
     text-align: center;
     margin: 10px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+
 }
 
 .user-menu {
@@ -48,6 +49,7 @@ body {
     display: flex;
     align-items: center;
     cursor: pointer;
+    margin-right: 1200px;
 }
 
 .dropdown-menu {
@@ -61,7 +63,7 @@ body {
     padding: 8px 0;
     min-width: 150px;
     z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-menu a {

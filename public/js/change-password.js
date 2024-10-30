@@ -9,7 +9,6 @@ class passwordForm {
         this.passwordConfirmInput = document.getElementById('passwordConfirm');
         this.signupButton = document.getElementById('signupButton');
         
-        // 에러 메시지 요소
         this.passwordError = document.getElementById('passwordError');
         this.passwordConfirmError = document.getElementById('passwordConfirmError');
     }
