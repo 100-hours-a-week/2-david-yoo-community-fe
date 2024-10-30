@@ -14,7 +14,6 @@ class SignupForm {
         this.signupButton = document.getElementById('signupButton');
         this.loginLink = document.getElementById('loginLink');
         
-        // 에러 메시지 요소
         this.emailError = document.getElementById('emailError');
         this.passwordError = document.getElementById('passwordError');
         this.passwordConfirmError = document.getElementById('passwordConfirmError');

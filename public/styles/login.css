@@ -13,11 +13,13 @@
 
 .login-section {
     text-align: center;
+    margin-top: -190px;
 }
 
 .login-title {
-    font-size: 18px;
+    font-size: 32px;
     margin-bottom: 20px;
+    font-weight: 700;
 }
 
 .form-group {
