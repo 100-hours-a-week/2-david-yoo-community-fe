@@ -49,17 +49,4 @@ document.addEventListener('DOMContentLoaded', function () {
         confirmPopup.classList.remove('show');
     });
 
-    const userMenu = document.querySelector('.user-menu');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-
-    userMenu.addEventListener('click', e => {
-        e.stopPropagation();
-        dropdownMenu.classList.toggle('show');
-    });
-
-    document.addEventListener('click', () => {
-        if (dropdownMenu.classList.contains('show')) {
-            dropdownMenu.classList.remove('show');
-        }
-    });
 });
