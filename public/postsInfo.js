@@ -35,6 +35,24 @@ const postsInfo = [
         author: '더미 작성자 4',
         profileImage: '../assets/default.webp',
     },
+    {
+        title: '제목 5',
+        likes: 10,
+        comments: 0,
+        views: 10,
+        date: '2021-02-01 00:00:00',
+        author: '더미 작성자 5',
+        profileImage: '../assets/default.webp',
+    },
+    {
+        title: '제목 6',
+        likes: 10,
+        comments: 0,
+        views: 10,
+        date: '2021-02-01 00:00:00',
+        author: '더미 작성자 6',
+        profileImage: '../assets/default.webp',
+    },
 ];
 
 export default postsInfo;

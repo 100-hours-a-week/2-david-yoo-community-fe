@@ -3,19 +3,22 @@
     margin: 80px 0 20px;
     text-align: center;
     font-weight: 400;
+    position: relative;
+    display: inline-block;
 }
 
 .create-button {
-    background-color: #aca0eb;
+    background-color: #ACA0EB;
     color: white;
     border: none;
     border-radius: 30px;
     padding: 10px 40px;
     cursor: pointer;
     white-space: nowrap;
-    position: fixed;
-    right: 1200px;
-    top: 200px;
+    position: absolute;
+    top: 22%;
+    left: 53%;
+    transform: translate(120%, -50%);
 }
 
 .thread-container {
@@ -57,7 +60,7 @@
 
 .post-divider {
     height: 1px;
-    background-color: #eaeaea;
+    background-color: #EAEAEA;
     margin: 16px 0;
 }
 
@@ -75,7 +78,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: #eaeaea;
+    background-color: #EAEAEA;
 }
 
 .profile-name {
