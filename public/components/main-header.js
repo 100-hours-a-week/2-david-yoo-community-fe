@@ -20,7 +20,7 @@ class MainHeader extends HTMLElement {
         const userMenu = this.querySelector('.user-menu');
         const dropdownMenu = this.querySelector('.dropdown-menu');
 
-        userMenu.addEventListener('click', (e) => {
+        userMenu.addEventListener('click', e => {
             e.stopPropagation();
             dropdownMenu.classList.toggle('show');
         });

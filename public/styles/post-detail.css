@@ -87,7 +87,7 @@
 }
 
 .stat-item {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
     padding: 15px 40px;
     border-radius: 15px;
     display: flex;
@@ -109,7 +109,7 @@
 
 .comment-section {
     margin-top: 30px;
-    border: 1px solid #E0E0E0;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 20px;
 }
@@ -124,7 +124,7 @@
 .comment-input textarea {
     width: 100%;
     height: 150px;
-    border: 1px solid #E0E0E0;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 10px;
     font-size: 14px;
@@ -133,12 +133,12 @@
 }
 
 .comment-divider {
-    border-top: 1px solid #E0E0E0;
+    border-top: 1px solid #e0e0e0;
     margin: 15px 0;
 }
 
 .comment-submit {
-    background-color: #ACA0EB;
+    background-color: #aca0eb;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -152,8 +152,6 @@
     justify-content: flex-end;
 }
 
-
-
 .comment-list {
     margin-top: 20px;
 }
@@ -163,7 +161,7 @@
     gap: 10px;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .comment-content {
@@ -182,7 +180,7 @@
 }
 
 .comment-actions button {
-    border: 1px solid #E0E0E0;
+    border: 1px solid #e0e0e0;
     background: white;
     padding: 5px 10px;
     border-radius: 4px;
@@ -256,7 +254,7 @@
 }
 
 .btn-confirm {
-    background-color: #ACA0EB;
+    background-color: #aca0eb;
     color: white;
 }
 

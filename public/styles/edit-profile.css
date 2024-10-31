@@ -11,7 +11,6 @@
     border-radius: 50%;
     border: 1px solid #ddd;
     display: block;
-
 }
 
 .main-content {
@@ -117,12 +116,12 @@
 }
 
 .signup-button {
-    background-color: #ACA0EB;
+    background-color: #aca0eb;
     color: white;
 }
 
 .signup-button:hover {
-    background-color: #7F6AEE;
+    background-color: #7f6aee;
 }
 
 .login-link {
@@ -188,6 +187,6 @@
 }
 
 .confirm-btn {
-    background-color: #ACA0EB;
+    background-color: #aca0eb;
     color: white;
 }

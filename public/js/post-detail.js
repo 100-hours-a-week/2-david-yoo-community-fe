@@ -14,10 +14,12 @@ function closeModal(modalId) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const postDeleteBtn = document.querySelector('.post-delete-btn');
     if (postDeleteBtn) {
-        postDeleteBtn.addEventListener('click', () => openModal('postDeleteModal'));
+        postDeleteBtn.addEventListener('click', () =>
+            openModal('postDeleteModal'),
+        );
     }
 
     const commentDeleteBtns = document.querySelectorAll('.comment-delete-btn');
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const cancelBtns = document.querySelectorAll('.btn-cancel');
     cancelBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const modalId = this.closest('.modal-backdrop').id;
             closeModal(modalId);
         });
@@ -35,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const modals = document.querySelectorAll('.modal-backdrop');
     modals.forEach(modal => {
-        modal.addEventListener('click', function(event) {
+        modal.addEventListener('click', function (event) {
             if (event.target === this) {
                 closeModal(this.id);
             }
