@@ -11,8 +11,12 @@ class LoginForm {
     }
 
     initializeEventListeners() {
-        this.emailInput.addEventListener('input', () => this.validateEmailInput());
-        this.passwordInput.addEventListener('input', () => this.validatePasswordInput());
+        this.emailInput.addEventListener('input', () =>
+            this.validateEmailInput(),
+        );
+        this.passwordInput.addEventListener('input', () =>
+            this.validatePasswordInput(),
+        );
         this.loginButton.addEventListener('click', () => this.handleLogin());
         this.signupButton.addEventListener('click', () => this.handleSignup());
     }
@@ -32,7 +36,8 @@ class LoginForm {
     }
 
     validatePassword(password) {
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+        const passwordPattern =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
         if (!password) {
             return '비밀번호를 입력해주세요.';
         }
@@ -53,12 +58,17 @@ class LoginForm {
         const error = this.validatePassword(this.passwordInput.value);
         this.passwordError.textContent = error;
         this.passwordError.classList.toggle('show', error !== '');
-        this.passwordInput.parentElement.classList.toggle('error', error !== '');
+        this.passwordInput.parentElement.classList.toggle(
+            'error',
+            error !== '',
+        );
     }
 
     handleLogin() {
         const emailValidation = this.validateEmail(this.emailInput.value);
-        const passwordValidation = this.validatePassword(this.passwordInput.value);
+        const passwordValidation = this.validatePassword(
+            this.passwordInput.value,
+        );
 
         if (!emailValidation && !passwordValidation) {
             this.loginButton.style.backgroundColor = '#7F6AEE';
@@ -67,9 +77,18 @@ class LoginForm {
             }, 500);
         } else {
             this.emailError.classList.toggle('show', emailValidation !== '');
-            this.passwordError.classList.toggle('show', passwordValidation !== '');
-            this.emailInput.parentElement.classList.toggle('error', emailValidation !== '');
-            this.passwordInput.parentElement.classList.toggle('error', passwordValidation !== '');
+            this.passwordError.classList.toggle(
+                'show',
+                passwordValidation !== '',
+            );
+            this.emailInput.parentElement.classList.toggle(
+                'error',
+                emailValidation !== '',
+            );
+            this.passwordInput.parentElement.classList.toggle(
+                'error',
+                passwordValidation !== '',
+            );
         }
     }
 

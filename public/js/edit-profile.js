@@ -1,5 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const profileImageContainer = document.getElementById('profileImageContainer');
+document.addEventListener('DOMContentLoaded', function () {
+    const profileImageContainer = document.getElementById(
+        'profileImageContainer',
+    );
     const profileUpload = document.getElementById('profileUpload');
     const profilePreview = document.getElementById('profilePreview');
 
@@ -7,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
         profileUpload.click();
     });
 
-    profileUpload.addEventListener('change', (e) => {
+    profileUpload.addEventListener('change', e => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (e) => {
+            reader.onload = e => {
                 profilePreview.src = e.target.result;
             };
             reader.readAsDataURL(file);
@@ -47,11 +49,10 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmPopup.classList.remove('show');
     });
 
-
     const userMenu = document.querySelector('.user-menu');
     const dropdownMenu = document.querySelector('.dropdown-menu');
 
-    userMenu.addEventListener('click', (e) => {
+    userMenu.addEventListener('click', e => {
         e.stopPropagation();
         dropdownMenu.classList.toggle('show');
     });

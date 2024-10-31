@@ -26,9 +26,9 @@ label {
     font-weight: bold;
 }
 
-input[type="text"],
+input[type='text'],
 textarea,
-input[type="file"] {
+input[type='file'] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -47,7 +47,7 @@ textarea {
 }
 
 button {
-    background-color: #ACA0EB;
+    background-color: #aca0eb;
     color: white;
     border: none;
     border-radius: 5px;
@@ -56,5 +56,5 @@ button {
 }
 
 button:hover {
-    background-color: #7F6AEE;
+    background-color: #7f6aee;
 }
