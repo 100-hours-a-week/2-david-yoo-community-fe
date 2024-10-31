@@ -8,9 +8,10 @@
         <link rel="stylesheet" href="../styles/global.css" />
         <link rel="stylesheet" href="../styles/edit-profile.css" />
     </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
 
     <body>
-        <main-header></main-header>
+        <lottie-header></lottie-header>
 
         <div class="post-container" role="main">
             <div class="post-header">
@@ -22,7 +23,12 @@
                         <span class="post-date">2021-01-01 00:00:00</span>
                     </div>
                     <div class="action-buttons">
-                        <button class="edit-btn">수정</button>
+                        <button
+                            class="edit-btn"
+                            onclick="location.href='edit-post.html'"
+                        >
+                            수정
+                        </button>
                         <button class="post-delete-btn">삭제</button>
                     </div>
                 </div>
@@ -107,6 +113,8 @@
             </div>
         </div>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
+        <script src="../components/lottie-header.js"></script>
         <script src="../js/post-detail.js"></script>
         <script src="../components/main-header.js"></script>
     </body>

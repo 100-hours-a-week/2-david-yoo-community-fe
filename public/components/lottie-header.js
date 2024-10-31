@@ -1,8 +1,9 @@
-class MainHeader extends HTMLElement {
+class LottieHeader extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
             <div class="main-header">
+                <div class="lottie-back-button" id="back-button"></div>
                 <div class="main-header-title">아무 말 대잔치</div>
                 <hr class="header-divider">
                 <div class="user-menu">
@@ -16,6 +17,7 @@ class MainHeader extends HTMLElement {
             </div>
         `;
         this.initDropdown();
+        this.initLottie();
     }
 
     initDropdown() {
@@ -33,6 +35,21 @@ class MainHeader extends HTMLElement {
             }
         });
     }
+
+    initLottie() {
+        const backButton = this.querySelector('#back-button');
+        const lottieAnimation = lottie.loadAnimation({
+            container: backButton,
+            renderer: 'svg',
+            loop: false,
+            autoplay: true,
+            path: '../assets/animation.json',
+        });
+
+        backButton.addEventListener('click', () => {
+            window.location.href = 'posts.html';
+        });
+    }
 }
 
-customElements.define('main-header', MainHeader);
+customElements.define('lottie-header', LottieHeader);
