@@ -3,7 +3,7 @@ class Header extends HTMLElement {
         super();
         this.innerHTML = `
             <div class="header">
-                <div class="header-title">아무 말 대잔치</div>
+                <h4 class="header-title">아무 말 대잔치</h4>
             </div>
         `;
     }

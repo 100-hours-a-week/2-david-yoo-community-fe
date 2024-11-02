@@ -2,10 +2,9 @@ class LottieHeader extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <div class="main-header">
+            <div class="header">
                 <div class="lottie-back-button" id="back-button"></div>
-                <div class="main-header-title">아무 말 대잔치</div>
-                <hr class="header-divider">
+                <h4 class="main-header-title">아무 말 대잔치</h4>
                 <div class="user-menu">
                     <img src="../assets/default.webp" alt="프로필" class="profile-small">
                     <div class="dropdown-menu">
