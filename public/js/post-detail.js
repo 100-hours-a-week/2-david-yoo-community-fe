@@ -14,7 +14,9 @@ async function fetchPost(postId) {
 function displayPost(post) {
     document.querySelector('.post-title').innerText = post.title;
     document.querySelector('.author-name').innerText = post.nickname;
-    document.querySelector('.post-date').innerText = new Date(post.time).toLocaleString();
+    document.querySelector('.post-date').innerText = new Date(
+        post.time,
+    ).toLocaleString();
     document.querySelector('.post-content p').innerText = post.content;
 }
 
@@ -51,7 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const postDeleteBtn = document.querySelector('.post-delete-btn');
     if (postDeleteBtn) {
-        postDeleteBtn.addEventListener('click', () => openModal('postDeleteModal'));
+        postDeleteBtn.addEventListener('click', () =>
+            openModal('postDeleteModal'),
+        );
     }
 
     const commentDeleteBtns = document.querySelectorAll('.comment-delete-btn');

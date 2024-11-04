@@ -8,7 +8,7 @@
 }
 
 .create-button {
-    background-color: #ACA0EB;
+    background-color: #aca0eb;
     color: white;
     border: none;
     border-radius: 30px;
@@ -60,7 +60,7 @@
 
 .post-divider {
     height: 1px;
-    background-color: #EAEAEA;
+    background-color: #eaeaea;
     margin: 16px 0;
 }
 
@@ -78,7 +78,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: #EAEAEA;
+    background-color: #eaeaea;
 }
 
 .profile-name {

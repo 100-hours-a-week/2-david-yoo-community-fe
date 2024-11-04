@@ -1,7 +1,7 @@
 function submitPost() {
-    const titleInput = document.getElementById('title'); 
-    const contentInput = document.getElementById('content'); 
-    const imageUploadInput = document.getElementById('imageUpload'); 
+    const titleInput = document.getElementById('title');
+    const contentInput = document.getElementById('content');
+    const imageUploadInput = document.getElementById('imageUpload');
 
     const title = titleInput.value.trim(); // 제목
     const content = contentInput.value.trim(); // 내용
@@ -25,19 +25,19 @@ function submitPost() {
         method: 'POST',
         body: formData,
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('게시물이 성공적으로 작성되었습니다!');
-            window.location.href = 'posts.html';
-        } else {
-            alert('게시물 작성에 실패했습니다.');
-        }
-    })
-    .catch(error => console.error('Error:', error));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert('게시물이 성공적으로 작성되었습니다!');
+                window.location.href = 'posts.html';
+            } else {
+                alert('게시물 작성에 실패했습니다.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }

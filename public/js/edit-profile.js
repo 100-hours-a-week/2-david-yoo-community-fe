@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const profileImageContainer = document.getElementById('profileImageContainer');
+    const profileImageContainer = document.getElementById(
+        'profileImageContainer',
+    );
     const profileUpload = document.getElementById('profileUpload');
     const profilePreview = document.getElementById('profilePreview');
 
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     saveButton.addEventListener('click', () => {
         const nickname = nicknameInput.value;
-        
+
         if (nickname.length < 2 || nickname.length > 10) {
             nicknameError.style.display = 'block';
             return;
@@ -72,15 +74,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 nickname: nickname,
             }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('닉네임이 성공적으로 변경되었습니다!');
-                location.href = 'posts.html';
-            } else {
-                alert('닉네임 변경에 실패했습니다.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('닉네임이 성공적으로 변경되었습니다!');
+                    location.href = 'posts.html';
+                } else {
+                    alert('닉네임 변경에 실패했습니다.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
     });
 });
