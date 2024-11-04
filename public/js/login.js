@@ -66,8 +66,10 @@ class LoginForm {
 
     async handleLogin() {
         const emailValidation = this.validateEmail(this.emailInput.value);
-        const passwordValidation = this.validatePassword(this.passwordInput.value);
-    
+        const passwordValidation = this.validatePassword(
+            this.passwordInput.value,
+        );
+
         if (!emailValidation && !passwordValidation) {
             try {
                 const response = await fetch('http://localhost:3000/login', {
@@ -78,14 +80,14 @@ class LoginForm {
                         password: this.passwordInput.value,
                     }),
                 });
-    
+
                 if (response.ok) {
                     const data = await response.json();
-    
+
                     // 로그인 성공 시 이메일과 닉네임을 localStorage에 저장
                     localStorage.setItem('email', this.emailInput.value);
                     localStorage.setItem('nickname', data.nickname);
-    
+
                     this.loginButton.style.backgroundColor = '#7F6AEE';
                     setTimeout(() => {
                         window.location.href = 'posts.html';
@@ -98,9 +100,18 @@ class LoginForm {
             }
         } else {
             this.emailError.classList.toggle('show', emailValidation !== '');
-            this.passwordError.classList.toggle('show', passwordValidation !== '');
-            this.emailInput.parentElement.classList.toggle('error', emailValidation !== '');
-            this.passwordInput.parentElement.classList.toggle('error', passwordValidation !== '');
+            this.passwordError.classList.toggle(
+                'show',
+                passwordValidation !== '',
+            );
+            this.emailInput.parentElement.classList.toggle(
+                'error',
+                emailValidation !== '',
+            );
+            this.passwordInput.parentElement.classList.toggle(
+                'error',
+                passwordValidation !== '',
+            );
         }
     }
 
