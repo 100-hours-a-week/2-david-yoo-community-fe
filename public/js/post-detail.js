@@ -36,7 +36,7 @@ function closeModal(modalId) {
 
 async function submitComment(postId) {
     const content = document.querySelector('.comment-input textarea').value;
-    const author = 'User'; // TODO : 댓글 작성자를 현재 로그인 한 유저로 변경
+    const author = 'User'; // TODO: 댓글 작성자를 현재 로그인 한 유저로 변경
 
     if (!content) return alert('댓글 내용을 입력하세요.');
 
@@ -129,17 +129,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cancelBtns = document.querySelectorAll('.btn-cancel');
     cancelBtns.forEach(btn => {
-        btn.addEventListener('click', function () {
-            const modalId = this.closest('.modal-backdrop').id;
+        btn.addEventListener('click', () => {
+            const modalId = btn.closest('.modal-backdrop').id;
             closeModal(modalId);
         });
     });
 
     const modals = document.querySelectorAll('.modal-backdrop');
     modals.forEach(modal => {
-        modal.addEventListener('click', function (event) {
-            if (event.target === this) {
-                closeModal(this.id);
+        modal.addEventListener('click', event => {
+            if (event.target === modal) {
+                closeModal(modal.id);
             }
         });
     });

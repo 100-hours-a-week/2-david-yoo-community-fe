@@ -31,7 +31,8 @@ function displayPosts(posts) {
             <div class="post-content">${post.content}</div>
         `;
 
-        postCard.addEventListener('click', function () {
+        // 화살표 함수로 변경
+        postCard.addEventListener('click', () => {
             window.location.href = `post-detail.html?id=${post.id}`;
         });
 
@@ -39,8 +40,10 @@ function displayPosts(posts) {
     });
 }
 
-document.querySelector('.create-button').addEventListener('click', function () {
+// 화살표 함수로 변경
+document.querySelector('.create-button').addEventListener('click', () => {
     window.location.href = 'create-post.html';
 });
 
+// 게시물 가져오기 호출
 fetchPosts();
