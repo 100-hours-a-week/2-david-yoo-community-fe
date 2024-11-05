@@ -8,8 +8,6 @@
         <link rel="stylesheet" href="../styles/global.css" />
         <link rel="stylesheet" href="../styles/edit-profile.css" />
     </head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
-
     <body>
         <lottie-header></lottie-header>
 
@@ -59,39 +57,18 @@
 
                 <div class="comment-section">
                     <div class="comment-input">
-                        <textarea placeholder="댓글을 입력하세요"></textarea>
+                        <textarea
+                            id="comment-input"
+                            name="comment"
+                            placeholder="댓글을 입력하세요"
+                        ></textarea>
                     </div>
                     <div class="comment-divider"></div>
                     <div class="comment-submit-container">
                         <button class="comment-submit">댓글 등록</button>
                     </div>
 
-                    <div class="comment-list">
-                        <div class="comment-item">
-                            <div class="profile-image"></div>
-                            <div class="comment-content">
-                                <div class="comment-header">
-                                    <div>
-                                        <span class="commenter-name"
-                                            >더미 작성자 1</span
-                                        >
-                                        <span class="comment-date"
-                                            >2021-01-01 00:00:00</span
-                                        >
-                                    </div>
-                                    <div class="comment-actions">
-                                        <button class="comment-edit-btn">
-                                            수정
-                                        </button>
-                                        <button class="comment-delete-btn">
-                                            삭제
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="comment-text">댓글 내용</div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="comment-list"></div>
                 </div>
             </div>
         </div>
