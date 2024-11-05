@@ -17,7 +17,7 @@ function populateForm(post) {
     // TODO: 이미지 처리 로직은 나중에 추가
 }
 
-async function submitPost() {
+async function reSubmitPost() {
     const postId = new URLSearchParams(window.location.search).get('id');
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;

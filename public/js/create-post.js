@@ -1,4 +1,4 @@
-function submitPost() {
+const submitPost = () => {
     const titleInput = document.getElementById('title');
     const contentInput = document.getElementById('content');
     const imageUploadInput = document.getElementById('imageUpload');
@@ -39,5 +39,5 @@ function submitPost() {
                 alert('게시물 작성에 실패했습니다.');
             }
         })
-        .catch(error => console.error('Error:', error));
-}
+        .catch(error => console.error(`Error: ${error}`));
+};

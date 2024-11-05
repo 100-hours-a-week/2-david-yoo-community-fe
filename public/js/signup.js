@@ -27,28 +27,30 @@ class SignupForm {
             this.profilePreview.addEventListener('click', () =>
                 this.profileUpload.click(),
             );
-            this.profileUpload.addEventListener('change', e =>
-                this.handleProfileImage(e),
+            this.profileUpload.addEventListener(
+                'change',
+                this.handleProfileImage,
             );
         }
 
-        this.emailInput.addEventListener('input', () =>
-            this.validateEmailInput(),
+        this.emailInput.addEventListener('input', this.validateEmailInput);
+        this.passwordInput.addEventListener(
+            'input',
+            this.validatePasswordInput,
         );
-        this.passwordInput.addEventListener('input', () =>
-            this.validatePasswordInput(),
+        this.passwordConfirmInput.addEventListener(
+            'input',
+            this.validatePasswordConfirmInput,
         );
-        this.passwordConfirmInput.addEventListener('input', () =>
-            this.validatePasswordConfirmInput(),
+        this.nicknameInput.addEventListener(
+            'input',
+            this.validateNicknameInput,
         );
-        this.nicknameInput.addEventListener('input', () =>
-            this.validateNicknameInput(),
-        );
-        this.signupButton.addEventListener('click', () => this.handleSignup());
-        this.loginLink.addEventListener('click', () => this.handleLoginLink());
+        this.signupButton.addEventListener('click', this.handleSignup);
+        this.loginLink.addEventListener('click', this.handleLoginLink);
     }
 
-    handleProfileImage(event) {
+    handleProfileImage = event => {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -57,7 +59,7 @@ class SignupForm {
             };
             reader.readAsDataURL(file);
         }
-    }
+    };
 
     validateEmail(email) {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -90,47 +92,43 @@ class SignupForm {
         return '';
     }
 
-    validateEmailInput() {
-        const error = this.validateEmail(this.emailInput.value);
-        this.emailError.textContent = error;
-        this.emailError.classList.toggle('show', error !== '');
-        this.emailInput.parentElement.classList.toggle('error', error !== '');
-    }
-
-    validatePasswordInput() {
-        const error = this.validatePassword(this.passwordInput.value);
-        this.passwordError.textContent = error;
-        this.passwordError.classList.toggle('show', error !== '');
-        this.passwordInput.parentElement.classList.toggle(
+    displayError(input, error) {
+        const errorElement = this[`${input}Error`];
+        errorElement.textContent = error;
+        errorElement.classList.toggle('show', error !== '');
+        this[input + 'Input'].parentElement.classList.toggle(
             'error',
             error !== '',
         );
     }
 
-    validatePasswordConfirmInput() {
+    validateEmailInput = () => {
+        this.displayError('email', this.validateEmail(this.emailInput.value));
+    };
+
+    validatePasswordInput = () => {
+        this.displayError(
+            'password',
+            this.validatePassword(this.passwordInput.value),
+        );
+    };
+
+    validatePasswordConfirmInput = () => {
         const error = this.validatePasswordConfirm(
             this.passwordInput.value,
             this.passwordConfirmInput.value,
         );
-        this.passwordConfirmError.textContent = error;
-        this.passwordConfirmError.classList.toggle('show', error !== '');
-        this.passwordConfirmInput.parentElement.classList.toggle(
-            'error',
-            error !== '',
-        );
-    }
+        this.displayError('passwordConfirm', error);
+    };
 
-    validateNicknameInput() {
-        const error = this.validateNickname(this.nicknameInput.value);
-        this.nicknameError.textContent = error;
-        this.nicknameError.classList.toggle('show', error !== '');
-        this.nicknameInput.parentElement.classList.toggle(
-            'error',
-            error !== '',
+    validateNicknameInput = () => {
+        this.displayError(
+            'nickname',
+            this.validateNickname(this.nicknameInput.value),
         );
-    }
+    };
 
-    handleSignup() {
+    handleSignup = () => {
         const emailValidation = this.validateEmail(this.emailInput.value);
         const passwordValidation = this.validatePassword(
             this.passwordInput.value,
@@ -172,42 +170,16 @@ class SignupForm {
                 })
                 .catch(error => console.error('Error:', error));
         } else {
-            this.emailError.classList.toggle('show', emailValidation !== '');
-            this.passwordError.classList.toggle(
-                'show',
-                passwordValidation !== '',
-            );
-            this.passwordConfirmError.classList.toggle(
-                'show',
-                passwordConfirmValidation !== '',
-            );
-            this.nicknameError.classList.toggle(
-                'show',
-                nicknameValidation !== '',
-            );
-
-            this.emailInput.parentElement.classList.toggle(
-                'error',
-                emailValidation !== '',
-            );
-            this.passwordInput.parentElement.classList.toggle(
-                'error',
-                passwordValidation !== '',
-            );
-            this.passwordConfirmInput.parentElement.classList.toggle(
-                'error',
-                passwordConfirmValidation !== '',
-            );
-            this.nicknameInput.parentElement.classList.toggle(
-                'error',
-                nicknameValidation !== '',
-            );
+            this.displayError('email', emailValidation);
+            this.displayError('password', passwordValidation);
+            this.displayError('passwordConfirm', passwordConfirmValidation);
+            this.displayError('nickname', nicknameValidation);
         }
-    }
+    };
 
-    handleLoginLink() {
+    handleLoginLink = () => {
         window.location.href = 'login.html';
-    }
+    };
 }
 
 document.addEventListener('DOMContentLoaded', () => {
