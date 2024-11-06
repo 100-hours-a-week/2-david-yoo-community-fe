@@ -77,6 +77,7 @@ class LoginForm {
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
                         body: JSON.stringify({
                             email: this.emailInput.value,
                             password: this.passwordInput.value,
@@ -86,35 +87,15 @@ class LoginForm {
 
                 if (response.ok) {
                     const data = await response.json();
-
-                    // 로그인 성공 시 이메일과 닉네임을 localStorage에 저장
-                    localStorage.setItem('email', this.emailInput.value);
                     localStorage.setItem('nickname', data.nickname);
-
-                    this.loginButton.style.backgroundColor = '#7F6AEE';
-                    setTimeout(() => {
-                        window.location.href = 'posts.html';
-                    }, 500);
+                    window.location.href = 'posts.html';
                 } else {
-                    console.error('로그인 실패');
+                    const errorData = await response.json();
+                    console.error(errorData.message);
                 }
             } catch (error) {
                 console.error('로그인 요청 중 오류 발생:', error);
             }
-        } else {
-            this.emailError.classList.toggle('show', emailValidation !== '');
-            this.passwordError.classList.toggle(
-                'show',
-                passwordValidation !== '',
-            );
-            this.emailInput.parentElement.classList.toggle(
-                'error',
-                emailValidation !== '',
-            );
-            this.passwordInput.parentElement.classList.toggle(
-                'error',
-                passwordValidation !== '',
-            );
         }
     }
 

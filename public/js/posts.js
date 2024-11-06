@@ -1,14 +1,18 @@
 const threadContainer = document.getElementById('threadContainer');
+let currentPage = 1;
+const postsPerPage = 10;
 
-async function fetchPosts() {
+async function fetchPosts(page = 1) {
     try {
-        const response = await fetch('http://localhost:3000/posts'); // 백엔드 API 엔드포인트
+        const response = await fetch(
+            `http://localhost:3000/posts?page=${page}&limit=${postsPerPage}`,
+        );
         if (!response.ok) {
             throw new Error('게시글을 가져오는 데 실패했습니다.');
         }
 
-        const posts = await response.json(); // JSON 형식으로 변환
-        displayPosts(posts);
+        const data = await response.json();
+        displayPosts(data.posts);
     } catch (error) {
         console.error(error);
         alert(error.message);
@@ -16,11 +20,10 @@ async function fetchPosts() {
 }
 
 function displayPosts(posts) {
-    threadContainer.innerHTML = ''; // 기존 게시물 초기화
     posts.forEach(post => {
         const postCard = document.createElement('div');
         postCard.classList.add('post-card');
-        postCard.dataset.id = post.id; // 각 포스트의 ID를 추가
+        postCard.dataset.id = post.id;
 
         postCard.innerHTML = `
             <div class="post-header">
@@ -31,7 +34,6 @@ function displayPosts(posts) {
             <div class="post-content">${post.content}</div>
         `;
 
-        // 화살표 함수로 변경
         postCard.addEventListener('click', () => {
             window.location.href = `post-detail.html?id=${post.id}`;
         });
@@ -40,10 +42,19 @@ function displayPosts(posts) {
     });
 }
 
-// 화살표 함수로 변경
+fetchPosts(currentPage);
+
+// Infinite scrolling
+window.addEventListener('scroll', () => {
+    if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 200
+    ) {
+        currentPage++;
+        fetchPosts(currentPage);
+    }
+});
+
 document.querySelector('.create-button').addEventListener('click', () => {
     window.location.href = 'create-post.html';
 });
-
-// 게시물 가져오기 호출
-fetchPosts();
