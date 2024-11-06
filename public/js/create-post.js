@@ -21,7 +21,7 @@ const submitPost = () => {
         formData.append('image', imageUploadInput.files[0]); // 이미지 파일 추가
     }
 
-    fetch('http://localhost:3000/create-post', {
+    fetch('http://localhost:3000/posts/create-post', {
         method: 'POST',
         body: formData,
     })
