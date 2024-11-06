@@ -153,7 +153,7 @@ class SignupForm {
                 nickname: this.nicknameInput.value,
             };
 
-            fetch('http://localhost:3000/signup', {
+            fetch('http://localhost:3000/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

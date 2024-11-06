@@ -34,6 +34,27 @@ function closeModal(modalId) {
     }
 }
 
+async function deletePost(postId) {
+    try {
+        const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('게시글 삭제에 실패했습니다.');
+        }
+
+        // 삭제 성공 시 목록 페이지로 이동
+        window.location.href = 'posts.html';
+    } catch (error) {
+        console.error('게시글 삭제 중 오류 발생:', error);
+        alert('게시글 삭제에 실패했습니다.');
+    }
+}
+
 async function submitComment(postId) {
     const content = document.querySelector('.comment-input textarea').value;
     const author = 'User'; // TODO: 댓글 작성자를 현재 로그인 한 유저로 변경
@@ -79,6 +100,7 @@ function displayComment(comment) {
     const commentList = document.querySelector('.comment-list');
     const commentItem = document.createElement('div');
     commentItem.classList.add('comment-item');
+    commentItem.setAttribute('data-comment-id', comment.id); // Add this line to store comment ID
 
     commentItem.innerHTML = `
         <div class="profile-image"></div>
@@ -90,7 +112,7 @@ function displayComment(comment) {
                 </div>
                 <div class="comment-actions">
                     <button class="comment-edit-btn">수정</button>
-                    <button class="comment-delete-btn">삭제</button>
+                    <button class="comment-delete-btn" data-comment-id="${comment.id}">삭제</button>
                 </div>
             </div>
             <div class="comment-text">${comment.content}</div>
@@ -99,7 +121,40 @@ function displayComment(comment) {
     commentList.appendChild(commentItem);
 
     const deleteBtn = commentItem.querySelector('.comment-delete-btn');
-    deleteBtn.addEventListener('click', () => openModal('commentDeleteModal'));
+    deleteBtn.addEventListener('click', () => {
+        const modal = document.getElementById('commentDeleteModal');
+        modal.setAttribute('data-comment-id', comment.id); // Store comment ID in modal
+        openModal('commentDeleteModal');
+    });
+}
+
+async function deleteComment(commentId) {
+    try {
+        const response = await fetch(
+            `http://localhost:3000/api/comments/${commentId}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error('댓글 삭제에 실패했습니다.');
+        }
+
+        // 화면에서 댓글 요소 제거
+        const commentElement = document.querySelector(
+            `[data-comment-id="${commentId}"]`,
+        );
+        if (commentElement) {
+            commentElement.remove();
+        }
+    } catch (error) {
+        console.error('댓글 삭제 중 오류 발생:', error);
+        alert('댓글 삭제에 실패했습니다.');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -120,11 +175,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 게시글 삭제 모달 관련 이벤트 리스너
     const postDeleteBtn = document.querySelector('.post-delete-btn');
     if (postDeleteBtn) {
         postDeleteBtn.addEventListener('click', () =>
             openModal('postDeleteModal'),
         );
+    }
+
+    // 게시글 삭제 확인 버튼 이벤트 리스너 추가
+    const postDeleteConfirmBtn = document.querySelector(
+        '#postDeleteModal .btn-confirm',
+    );
+    if (postDeleteConfirmBtn) {
+        postDeleteConfirmBtn.addEventListener('click', async () => {
+            await deletePost(postId);
+            closeModal('postDeleteModal');
+        });
+    }
+
+    // 댓글 삭제
+    const commentDeleteConfirmBtn = document.querySelector(
+        '#commentDeleteModal .btn-confirm',
+    );
+    if (commentDeleteConfirmBtn) {
+        commentDeleteConfirmBtn.addEventListener('click', async () => {
+            const modal = document.getElementById('commentDeleteModal');
+            const commentId = modal.getAttribute('data-comment-id');
+            if (commentId) {
+                await deleteComment(commentId);
+                closeModal('commentDeleteModal');
+            }
+        });
     }
 
     const cancelBtns = document.querySelectorAll('.btn-cancel');

@@ -15,16 +15,26 @@ function populateForm(post) {
     document.getElementById('title').value = post.title;
     document.getElementById('content').value = post.content;
     // TODO: 이미지 처리 로직은 나중에 추가
+    // nickname을 hidden input으로 저장
+    if (!document.getElementById('originalNickname')) {
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.id = 'originalNickname';
+        document.body.appendChild(hiddenInput);
+    }
+    document.getElementById('originalNickname').value = post.nickname;
 }
 
 async function reSubmitPost() {
     const postId = new URLSearchParams(window.location.search).get('id');
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
+    const nickname = document.getElementById('originalNickname').value; // 기존 닉네임 유지
 
     const updatedPost = {
         title,
         content,
+        nickname,
         time: new Date().toISOString(),
         // TODO: 이미지 처리 로직 추가
     };
@@ -52,10 +62,18 @@ async function reSubmitPost() {
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
-
     if (postId) {
         fetchPost(postId);
     } else {
         console.error('게시물 ID가 없습니다.');
+    }
+
+    // submit 이벤트 리스너 추가
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            reSubmitPost();
+        });
     }
 });
