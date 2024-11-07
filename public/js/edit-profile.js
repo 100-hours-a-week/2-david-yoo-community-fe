@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
             nicknameError.style.display = 'none';
         }
 
-        fetch('http://localhost:3000/auth/update-nickname', {
+        fetch('http://localhost:3000/user/update-nickname', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
