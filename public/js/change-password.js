@@ -67,18 +67,16 @@ class passwordForm {
     }
 
     async handlePassword() {
-        const passwordValidation = this.validatePassword(
-            this.passwordInput.value,
-        );
+        const passwordValidation = this.validatePassword(this.passwordInput.value);
         const passwordConfirmValidation = this.validatePasswordConfirm(
             this.passwordInput.value,
             this.passwordConfirmInput.value,
         );
-
+    
         if (!passwordValidation && !passwordConfirmValidation) {
             try {
                 const response = await fetch(
-                    'http://localhost:3000/change-password',
+                    'http://localhost:3000/user/change-password',
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -88,29 +86,30 @@ class passwordForm {
                         }),
                     },
                 );
-
-                if (response.ok) {
+    
+                const result = await response.json();
+    
+                if (result.success) {
                     alert('비밀번호가 성공적으로 변경되었습니다.');
                     this.signupButton.style.backgroundColor = '#7F6AEE';
                     setTimeout(() => {
                         window.location.href = 'posts.html';
                     }, 500);
                 } else {
-                    alert('비밀번호 변경에 실패했습니다.');
+                    alert(`비밀번호 변경 실패: ${result.message || '알 수 없는 오류'}`);
                 }
             } catch (error) {
                 console.error('비밀번호 변경 요청 중 오류 발생:', error);
+                alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
             }
         } else {
-            this.passwordError.classList.toggle(
-                'show',
-                passwordValidation !== '',
-            );
+            // 유효성 검사 실패 시
+            this.passwordError.classList.toggle('show', passwordValidation !== '');
             this.passwordConfirmError.classList.toggle(
                 'show',
                 passwordConfirmValidation !== '',
             );
-
+    
             this.passwordInput.parentElement.classList.toggle(
                 'error',
                 passwordValidation !== '',
