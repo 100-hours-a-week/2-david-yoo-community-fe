@@ -87,6 +87,8 @@ class LoginForm {
 
                 if (response.ok) {
                     const data = await response.json();
+                    // 이메일과 닉네임 모두 저장
+                    localStorage.setItem('email', this.emailInput.value);
                     localStorage.setItem('nickname', data.nickname);
                     window.location.href = 'posts.html';
                 } else {
