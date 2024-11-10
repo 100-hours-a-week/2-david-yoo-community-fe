@@ -160,15 +160,19 @@ class SignupForm {
                 },
                 body: JSON.stringify(userData),
             })
-                .then(response => {
-                    if (response.ok) {
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
                         alert('회원가입 성공');
                         window.location.href = 'login.html';
                     } else {
-                        alert('회원가입 실패');
+                        alert(data.message || '회원가입 실패');
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('서버 오류가 발생했습니다.');
+                });
         } else {
             this.displayError('email', emailValidation);
             this.displayError('password', passwordValidation);
