@@ -267,3 +267,19 @@
 .show {
     display: flex;
 }
+
+.stat-item[data-type='likes'] {
+    transition: all 0.2s ease;
+}
+
+.stat-item[data-type='likes']:hover {
+    opacity: 0.8;
+}
+
+.stat-item[data-type='likes'].liked {
+    color: #ff0000;
+}
+
+.stat-item[data-type='likes'].liked .stat-value {
+    color: #ff0000;
+}
