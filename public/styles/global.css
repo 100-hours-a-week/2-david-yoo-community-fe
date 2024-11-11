@@ -23,7 +23,7 @@ body {
     width: 100px;
     height: 100px;
     cursor: pointer;
-    left: 40px; /* 추가: 왼쪽에서 40px 떨어지게 설정 */
+    left: 40px;
 }
 
 .header-title {
