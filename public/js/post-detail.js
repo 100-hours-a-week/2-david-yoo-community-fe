@@ -1,5 +1,9 @@
 async function fetchPost(postId) {
     try {
+        // 조회수 증가, 페이지가 로딩될 때 마다 조회수 추가
+        await fetch(`http://localhost:3000/api/views/${postId}`, {
+            method: 'POST'
+        });
         const response = await fetch(`http://localhost:3000/posts/${postId}`);
         if (!response.ok) {
             throw new Error('게시글을 가져오는 데 실패했습니다.');
