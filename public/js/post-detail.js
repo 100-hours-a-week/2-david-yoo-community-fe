@@ -5,6 +5,9 @@ async function fetchPost(postId) {
             throw new Error('게시글을 가져오는 데 실패했습니다.');
         }
         const post = await response.json();
+        // 댓글 수 계산
+        const commentCount = await fetchCommentCount(postId);
+        post.commentsCount = commentCount;
         displayPost(post);
     } catch (error) {
         console.error(error);
@@ -56,24 +59,42 @@ async function deletePost(postId) {
 }
 
 async function submitComment(postId) {
+    const nickname = localStorage.getItem('nickname');
+    
+    // 로그인 상태 확인
+    if (!nickname) {
+        alert('댓글을 작성하려면 로그인이 필요합니다.');
+        return;
+    }
+    
     const content = document.querySelector('.comment-input textarea').value;
-    const author = 'User'; // TODO: 댓글 작성자를 현재 로그인 한 유저로 변경
-
-    if (!content) return alert('댓글 내용을 입력하세요.');
+    if (!content) {
+        alert('댓글 내용을 입력하세요.');
+        return;
+    }
 
     try {
         const response = await fetch(`http://localhost:3000/api/comments`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ postId, content, author }),
+            credentials: 'include',
+            body: JSON.stringify({ 
+                postId, 
+                content, 
+                author: nickname // 현재 로그인한 사용자의 닉네임으로 설정
+            }),
         });
 
         if (response.ok) {
             const newComment = await response.json();
             displayComment(newComment);
             document.querySelector('.comment-input textarea').value = '';
+            // 댓글 수 업데이트
+            const currentCount = parseInt(document.getElementById('comments-count').innerText || '0');
+            updateCommentCount(currentCount + 1);
         } else {
-            console.error('댓글 등록 실패');
+            const errorData = await response.json();
+            alert(errorData.message || '댓글 등록에 실패했습니다.');
         }
     } catch (error) {
         console.error('서버 오류:', error);
@@ -150,12 +171,37 @@ async function deleteComment(commentId) {
         );
         if (commentElement) {
             commentElement.remove();
+            // 댓글 수 업데이트
+            const currentCount = parseInt(document.getElementById('comments-count').innerText || '0');
+            updateCommentCount(Math.max(0, currentCount - 1));
         }
     } catch (error) {
         console.error('댓글 삭제 중 오류 발생:', error);
         alert('댓글 삭제에 실패했습니다.');
     }
 }
+
+async function fetchCommentCount(postId) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/comments/${postId}`);
+        if (!response.ok) {
+            throw new Error('댓글을 가져오는 데 실패했습니다.');
+        }
+        const comments = await response.json();
+        return comments.length;
+    } catch (error) {
+        console.error('댓글 수를 가져오는 중 오류:', error);
+        return 0;
+    }
+}
+
+function updateCommentCount(count) {
+    const commentCountElement = document.getElementById('comments-count');
+    if (commentCountElement) {
+        commentCountElement.innerText = count;
+    }
+}
+
 
 async function toggleLike(postId) {
     try {
