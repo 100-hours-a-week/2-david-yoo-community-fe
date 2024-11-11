@@ -157,6 +157,93 @@ async function deleteComment(commentId) {
     }
 }
 
+async function toggleLike(postId) {
+    try {
+        const response = await fetch(
+            `http://localhost:3000/api/likes/${postId}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // 쿠키 전송을 위해 필요
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error('좋아요 처리 중 오류가 발생했습니다.');
+        }
+
+        const result = await response.json();
+        updateLikeDisplay(result.isLiked, result.likeCount);
+    } catch (error) {
+        console.error('좋아요 처리 중 오류:', error);
+    }
+}
+
+function updateLikeDisplay(isLiked, likeCount) {
+    const likesCountElement = document.getElementById('likes-count');
+    const likeButton = document.querySelector('.stat-item[data-type="likes"]');
+
+    // 좋아요 수 업데이트
+    likesCountElement.innerText = likeCount;
+
+    // 좋아요 상태에 따른 스타일 변경
+    if (isLiked) {
+        likeButton.classList.add('liked');
+    } else {
+        likeButton.classList.remove('liked');
+    }
+}
+
+// displayPost 함수 수정
+function displayPost(post) {
+    document.querySelector('.post-title').innerText = post.title;
+    document.querySelector('.author-name').innerText = post.nickname;
+    document.querySelector('.post-date').innerText = new Date(
+        post.time,
+    ).toLocaleString();
+    document.querySelector('.post-content p').innerText = post.content;
+
+    // 좋아요 수 표시
+    document.getElementById('likes-count').innerText = post.likeCount || 0;
+    document.getElementById('views-count').innerText = post.views || 0;
+    document.getElementById('comments-count').innerText =
+        post.commentsCount || 0;
+
+    // 초기 좋아요 상태 확인
+    checkLikeStatus(post.id);
+}
+
+// 좋아요 상태 확인 함수
+async function checkLikeStatus(postId) {
+    try {
+        const response = await fetch(
+            `http://localhost:3000/api/likes/check/${postId}`,
+            {
+                credentials: 'include',
+            },
+        );
+
+        if (response.status === 401) {
+            console.log('로그인이 필요한 기능입니다.');
+            return;
+        }
+
+        if (response.ok) {
+            const { isLiked } = await response.json();
+            const likeButton = document.querySelector(
+                '.stat-item[data-type="likes"]',
+            );
+            if (isLiked) {
+                likeButton.classList.add('liked');
+            }
+        }
+    } catch (error) {
+        console.error('좋아요 상태 확인 중 오류:', error);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
@@ -228,4 +315,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const commentSubmitButton = document.querySelector('.comment-submit');
     commentSubmitButton.addEventListener('click', () => submitComment(postId));
+
+    const likeButton = document.querySelector('.stat-item');
+    likeButton.setAttribute('data-type', 'likes');
+    likeButton.style.cursor = 'pointer';
+    likeButton.addEventListener('click', () => {
+        const postId = new URLSearchParams(window.location.search).get('id');
+        toggleLike(postId);
+    });
 });
