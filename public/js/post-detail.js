@@ -100,7 +100,7 @@ function displayComment(comment) {
     const commentList = document.querySelector('.comment-list');
     const commentItem = document.createElement('div');
     commentItem.classList.add('comment-item');
-    commentItem.setAttribute('data-comment-id', comment.id); // Add this line to store comment ID
+    commentItem.setAttribute('data-comment-id', comment.id);
 
     commentItem.innerHTML = `
         <div class="profile-image"></div>
@@ -123,7 +123,7 @@ function displayComment(comment) {
     const deleteBtn = commentItem.querySelector('.comment-delete-btn');
     deleteBtn.addEventListener('click', () => {
         const modal = document.getElementById('commentDeleteModal');
-        modal.setAttribute('data-comment-id', comment.id); // Store comment ID in modal
+        modal.setAttribute('data-comment-id', comment.id);
         openModal('commentDeleteModal');
     });
 }
@@ -196,7 +196,6 @@ function updateLikeDisplay(isLiked, likeCount) {
     }
 }
 
-// displayPost 함수 수정
 function displayPost(post) {
     document.querySelector('.post-title').innerText = post.title;
     document.querySelector('.author-name').innerText = post.nickname;
@@ -215,7 +214,7 @@ function displayPost(post) {
     checkLikeStatus(post.id);
 }
 
-// 좋아요 상태 확인 함수
+// 좋아요 상태 확인
 async function checkLikeStatus(postId) {
     try {
         const response = await fetch(
