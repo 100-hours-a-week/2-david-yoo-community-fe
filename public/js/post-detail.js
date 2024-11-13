@@ -204,11 +204,9 @@ async function deleteComment(commentId) {
                 },
             },
         );
-
         if (!response.ok) {
             throw new Error('댓글 삭제에 실패했습니다.');
         }
-
         // 화면에서 댓글 요소 제거
         const commentElement = document.querySelector(
             `[data-comment-id="${commentId}"]`,
@@ -298,12 +296,10 @@ async function checkLikeStatus(postId) {
                 credentials: 'include',
             },
         );
-
         if (response.status === 401) {
             console.log('로그인이 필요한 기능입니다.');
             return;
         }
-
         if (response.ok) {
             const { isLiked } = await response.json();
             const likeButton = document.querySelector(

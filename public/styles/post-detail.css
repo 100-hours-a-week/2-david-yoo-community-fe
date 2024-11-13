@@ -207,11 +207,11 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
-    display: flex; /* 변경된 부분: 기본적으로 flex로 설정 */
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    visibility: hidden; /* 모달이 숨겨진 상태를 위한 속성 추가 */
+    visibility: hidden;
 }
 
 .modal-backdrop.show {
@@ -246,20 +246,22 @@
     justify-content: center;
 }
 
-.btn {
+.btn-cancel {
     padding: 12px 40px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     font-size: 16px;
-}
-
-.btn-cancel {
     background-color: #333;
     color: white;
 }
 
 .btn-confirm {
+    padding: 12px 40px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
     background-color: #aca0eb;
     color: white;
 }
@@ -286,16 +288,15 @@
 
 .post-image {
     width: 100%;
-    max-width: 800px; /* 최대 너비 설정 */
-    margin: 20px auto; /* 중앙 정렬 */
-    border-radius: 8px; /* 모서리 둥글게 */
+    max-width: 800px;
+    margin: 20px auto;
+    border-radius: 8px;
     overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .post-image img {
     width: 100%;
     height: auto;
     display: block;
-    object-fit: cover; /* 이미지 비율 유지 */
 }

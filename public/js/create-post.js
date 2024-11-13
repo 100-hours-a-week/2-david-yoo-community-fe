@@ -11,8 +11,6 @@ const submitPost = () => {
         alert('제목과 내용은 필수입니다.');
         return;
     }
-
-    // TODO : 이미지 업로드
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
