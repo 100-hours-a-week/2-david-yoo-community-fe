@@ -283,3 +283,19 @@
 .stat-item[data-type='likes'].liked .stat-value {
     color: #ff0000;
 }
+
+.post-image {
+    width: 100%;
+    max-width: 800px; /* 최대 너비 설정 */
+    margin: 20px auto; /* 중앙 정렬 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover; /* 이미지 비율 유지 */
+}
