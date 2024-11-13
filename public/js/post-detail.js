@@ -2,7 +2,7 @@ async function fetchPost(postId) {
     try {
         // 조회수 증가, 페이지가 로딩될 때 마다 조회수 추가
         await fetch(`http://localhost:3000/api/views/${postId}`, {
-            method: 'POST'
+            method: 'POST',
         });
         const response = await fetch(`http://localhost:3000/posts/${postId}`);
         if (!response.ok) {
@@ -19,12 +19,50 @@ async function fetchPost(postId) {
 }
 
 function displayPost(post) {
-    document.querySelector('.post-title').innerText = post.title;
-    document.querySelector('.author-name').innerText = post.nickname;
-    document.querySelector('.post-date').innerText = new Date(
-        post.time,
-    ).toLocaleString();
-    document.querySelector('.post-content p').innerText = post.content;
+    // 제목, 작성자, 날짜 업데이트
+    const titleElement = document.getElementById('post-title');
+    const authorElement = document.getElementById('author-name');
+    const dateElement = document.getElementById('post-date');
+    const contentElement = document.getElementById('content-text');
+
+    if (titleElement) titleElement.innerText = post.title;
+    if (authorElement) authorElement.innerText = post.nickname;
+    if (dateElement)
+        dateElement.innerText = new Date(post.time).toLocaleString();
+    if (contentElement) contentElement.innerText = post.content;
+
+    // 이미지 표시 로직
+    const postImageContainer = document.querySelector('.post-image');
+    if (postImageContainer) {
+        if (post.imageData) {
+            const img = document.createElement('img');
+            img.src = post.imageData;
+            img.alt = '게시글 이미지';
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+
+            // 기존 이미지가 있다면 제거
+            while (postImageContainer.firstChild) {
+                postImageContainer.removeChild(postImageContainer.firstChild);
+            }
+            postImageContainer.appendChild(img);
+            postImageContainer.style.display = 'block';
+        } else {
+            postImageContainer.style.display = 'none';
+        }
+    }
+
+    // 통계 표시
+    const likesElement = document.getElementById('likes-count');
+    const viewsElement = document.getElementById('views-count');
+    const commentsElement = document.getElementById('comments-count');
+
+    if (likesElement) likesElement.innerText = post.likeCount || 0;
+    if (viewsElement) viewsElement.innerText = post.views || 0;
+    if (commentsElement) commentsElement.innerText = post.commentsCount || 0;
+
+    // 좋아요 상태 확인
+    checkLikeStatus(post.id);
 }
 
 function openModal(modalId) {
@@ -64,13 +102,13 @@ async function deletePost(postId) {
 
 async function submitComment(postId) {
     const nickname = localStorage.getItem('nickname');
-    
+
     // 로그인 상태 확인
     if (!nickname) {
         alert('댓글을 작성하려면 로그인이 필요합니다.');
         return;
     }
-    
+
     const content = document.querySelector('.comment-input textarea').value;
     if (!content) {
         alert('댓글 내용을 입력하세요.');
@@ -82,10 +120,10 @@ async function submitComment(postId) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({ 
-                postId, 
-                content, 
-                author: nickname // 현재 로그인한 사용자의 닉네임으로 설정
+            body: JSON.stringify({
+                postId,
+                content,
+                author: nickname, // 현재 로그인한 사용자의 닉네임으로 설정
             }),
         });
 
@@ -94,7 +132,9 @@ async function submitComment(postId) {
             displayComment(newComment);
             document.querySelector('.comment-input textarea').value = '';
             // 댓글 수 업데이트
-            const currentCount = parseInt(document.getElementById('comments-count').innerText || '0');
+            const currentCount = parseInt(
+                document.getElementById('comments-count').innerText || '0',
+            );
             updateCommentCount(currentCount + 1);
         } else {
             const errorData = await response.json();
@@ -176,7 +216,9 @@ async function deleteComment(commentId) {
         if (commentElement) {
             commentElement.remove();
             // 댓글 수 업데이트
-            const currentCount = parseInt(document.getElementById('comments-count').innerText || '0');
+            const currentCount = parseInt(
+                document.getElementById('comments-count').innerText || '0',
+            );
             updateCommentCount(Math.max(0, currentCount - 1));
         }
     } catch (error) {
@@ -187,7 +229,9 @@ async function deleteComment(commentId) {
 
 async function fetchCommentCount(postId) {
     try {
-        const response = await fetch(`http://localhost:3000/api/comments/${postId}`);
+        const response = await fetch(
+            `http://localhost:3000/api/comments/${postId}`,
+        );
         if (!response.ok) {
             throw new Error('댓글을 가져오는 데 실패했습니다.');
         }
@@ -205,7 +249,6 @@ function updateCommentCount(count) {
         commentCountElement.innerText = count;
     }
 }
-
 
 async function toggleLike(postId) {
     try {
@@ -244,24 +287,6 @@ function updateLikeDisplay(isLiked, likeCount) {
     } else {
         likeButton.classList.remove('liked');
     }
-}
-
-function displayPost(post) {
-    document.querySelector('.post-title').innerText = post.title;
-    document.querySelector('.author-name').innerText = post.nickname;
-    document.querySelector('.post-date').innerText = new Date(
-        post.time,
-    ).toLocaleString();
-    document.querySelector('.post-content p').innerText = post.content;
-
-    // 좋아요 수 표시
-    document.getElementById('likes-count').innerText = post.likeCount || 0;
-    document.getElementById('views-count').innerText = post.views || 0;
-    document.getElementById('comments-count').innerText =
-        post.commentsCount || 0;
-
-    // 초기 좋아요 상태 확인
-    checkLikeStatus(post.id);
 }
 
 // 좋아요 상태 확인
