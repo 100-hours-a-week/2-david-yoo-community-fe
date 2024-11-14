@@ -2,6 +2,7 @@ class SignupForm {
     constructor() {
         this.initializeElements();
         this.initializeEventListeners();
+        this.profileImageData = null;
     }
 
     initializeElements() {
@@ -56,6 +57,7 @@ class SignupForm {
             const reader = new FileReader();
             reader.onload = e => {
                 this.profilePreview.src = e.target.result;
+                this.profileImageData = e.target.result; // Base64 이미지 데이터 저장
             };
             reader.readAsDataURL(file);
         }
@@ -151,6 +153,7 @@ class SignupForm {
                 email: this.emailInput.value,
                 password: this.passwordInput.value,
                 nickname: this.nicknameInput.value,
+                profileImage: this.profileImageData || 'default.webp', // 이미지 데이터 추가
             };
 
             fetch('http://localhost:3000/auth/signup', {
