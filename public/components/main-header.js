@@ -1,20 +1,35 @@
 class MainHeader extends HTMLElement {
     constructor() {
         super();
-        this.innerHTML = `
-            <div class="header">
-                <h4 class="main-header-title">아무 말 대잔치</h4>
-                <div class="user-menu">
-                    <img src="../assets/default.webp" alt="프로필" class="profile-small">
-                    <div class="dropdown-menu">
-                        <a href="edit-profile.html">회원정보수정</a>
-                        <a href="change-password.html">비밀번호수정</a>
-                        <a href="login.html">로그아웃</a>
+        this.loadProfileImage();
+    }
+    async loadProfileImage() {
+        const email = localStorage.getItem('email');
+        try {
+            const response = await fetch(
+                `http://localhost:3000/user/profile-image/${email}`,
+            );
+            const data = await response.json();
+
+            this.innerHTML = `
+                <div class="header">
+                    <h4 class="main-header-title">아무 말 대잔치</h4>
+                    <div class="user-menu">
+                        <img src="${data.success ? `http://localhost:3000/uploads/${data.profileImage}` : '../assets/default.webp'}" 
+                             alt="프로필" 
+                             class="profile-small">
+                        <div class="dropdown-menu">
+                            <a href="edit-profile.html">회원정보수정</a>
+                            <a href="change-password.html">비밀번호수정</a>
+                            <a href="login.html">로그아웃</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
-        this.initDropdown();
+            `;
+            this.initDropdown();
+        } catch (error) {
+            console.error('프로필 이미지 로드 실패:', error);
+        }
     }
 
     initDropdown() {
