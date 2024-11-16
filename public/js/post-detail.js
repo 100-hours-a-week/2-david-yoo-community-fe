@@ -1,3 +1,4 @@
+// 특정 게시글 데이터를 가져오는 함수
 async function fetchPost(postId) {
     try {
         // 조회수 증가, 페이지가 로딩될 때 마다 조회수 추가
@@ -18,6 +19,7 @@ async function fetchPost(postId) {
     }
 }
 
+// 게시글을 보여주는 함수
 function displayPost(post) {
     // 제목, 작성자, 날짜 업데이트
     const titleElement = document.getElementById('post-title');
@@ -41,7 +43,7 @@ function displayPost(post) {
             img.style.maxWidth = '100%';
             img.style.height = 'auto';
 
-            // 기존 이미지가 있다면 제거
+            // 기존 이미지 제거 후 새 이미지 추가
             while (postImageContainer.firstChild) {
                 postImageContainer.removeChild(postImageContainer.firstChild);
             }
@@ -52,7 +54,7 @@ function displayPost(post) {
         }
     }
 
-    // 통계 표시
+    // 게시글 통계 (좋아요, 조회수, 댓글 수) 업데이트
     const likesElement = document.getElementById('likes-count');
     const viewsElement = document.getElementById('views-count');
     const commentsElement = document.getElementById('comments-count');
@@ -79,6 +81,7 @@ function closeModal(modalId) {
     }
 }
 
+// 게시글 삭제 함수
 async function deletePost(postId) {
     try {
         const response = await fetch(`http://localhost:3000/posts/${postId}`, {
@@ -87,11 +90,9 @@ async function deletePost(postId) {
                 'Content-Type': 'application/json',
             },
         });
-
         if (!response.ok) {
             throw new Error('게시글 삭제에 실패했습니다.');
         }
-
         // 삭제 성공 시 목록 페이지로 이동
         window.location.href = 'posts.html';
     } catch (error) {
@@ -100,6 +101,7 @@ async function deletePost(postId) {
     }
 }
 
+// 댓글 작성 함수
 async function submitComment(postId) {
     const nickname = localStorage.getItem('nickname');
 
@@ -145,6 +147,7 @@ async function submitComment(postId) {
     }
 }
 
+// 댓글 목록을 가져오는 함수
 async function fetchComments(postId) {
     try {
         const response = await fetch(
@@ -152,7 +155,7 @@ async function fetchComments(postId) {
         );
         if (response.ok) {
             const comments = await response.json();
-            comments.forEach(displayComment);
+            comments.forEach(displayComment); // 각 댓글을 화면에 표시
         } else {
             console.error('댓글을 불러오는 데 실패했습니다.');
         }
@@ -161,6 +164,7 @@ async function fetchComments(postId) {
     }
 }
 
+// 댓글을 화면에 표시하는 함수
 function displayComment(comment) {
     const commentList = document.querySelector('.comment-list');
     const commentItem = document.createElement('div');
@@ -193,6 +197,7 @@ function displayComment(comment) {
     });
 }
 
+// 댓글 삭제 함수
 async function deleteComment(commentId) {
     try {
         const response = await fetch(
@@ -225,6 +230,7 @@ async function deleteComment(commentId) {
     }
 }
 
+// 게시글의 댓글 수를 가져오는 함수
 async function fetchCommentCount(postId) {
     try {
         const response = await fetch(
@@ -241,6 +247,7 @@ async function fetchCommentCount(postId) {
     }
 }
 
+// 댓글 수를 업데이트하는 함수
 function updateCommentCount(count) {
     const commentCountElement = document.getElementById('comments-count');
     if (commentCountElement) {
@@ -248,6 +255,7 @@ function updateCommentCount(count) {
     }
 }
 
+// 좋아요 처리 함수
 async function toggleLike(postId) {
     try {
         const response = await fetch(
@@ -257,7 +265,7 @@ async function toggleLike(postId) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // 쿠키 전송을 위해 필요
+                credentials: 'include',
             },
         );
 
@@ -272,19 +280,13 @@ async function toggleLike(postId) {
     }
 }
 
+// 좋아요 수를 업데이트하는 함수
 function updateLikeDisplay(isLiked, likeCount) {
     const likesCountElement = document.getElementById('likes-count');
     const likeButton = document.querySelector('.stat-item[data-type="likes"]');
 
     // 좋아요 수 업데이트
     likesCountElement.innerText = likeCount;
-
-    // 좋아요 상태에 따른 스타일 변경
-    if (isLiked) {
-        likeButton.classList.add('liked');
-    } else {
-        likeButton.classList.remove('liked');
-    }
 }
 
 // 좋아요 상태 확인

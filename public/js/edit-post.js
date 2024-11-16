@@ -11,6 +11,7 @@ async function fetchPost(postId) {
     }
 }
 
+// 폼에 게시글 데이터를 채우는 함수
 function populateForm(post) {
     document.getElementById('title').value = post.title;
     document.getElementById('content').value = post.content;
@@ -32,6 +33,7 @@ function populateForm(post) {
     document.getElementById('originalNickname').value = post.nickname;
 }
 
+// 게시글을 수정하는 함수
 async function reSubmitPost() {
     const postId = new URLSearchParams(window.location.search).get('id');
     const title = document.getElementById('title').value;
@@ -44,7 +46,7 @@ async function reSubmitPost() {
     formData.append('content', content);
     formData.append('nickname', nickname);
 
-    // 새로운 이미지가 선택되었다면 추가
+    // 새로운 이미지가 선택되었다면 FormData에 추가
     if (imageInput && imageInput.files.length > 0) {
         formData.append('image', imageInput.files[0]);
     }
@@ -67,7 +69,7 @@ async function reSubmitPost() {
     }
 }
 
-// 이미지 미리보기 함수 추가
+// 이미지 미리보기 함수
 function handleImagePreview() {
     const imageInput = document.getElementById('imageUpload');
     const imagePreview = document.getElementById('imagePreview');
@@ -80,7 +82,6 @@ function handleImagePreview() {
                 imagePreview.src = e.target.result;
                 imagePreview.style.display = 'block';
             };
-
             reader.readAsDataURL(e.target.files[0]);
         }
     });

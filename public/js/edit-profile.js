@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const profileUpload = document.getElementById('profileUpload');
     const profilePreview = document.getElementById('profilePreview');
     const email = localStorage.getItem('email');
-
+    // 사용자의 프로필 이미지를 서버에서 가져오기
     fetch(`http://localhost:3000/user/profile-image/${email}`)
         .then(response => response.json())
         .then(data => {
@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('프로필 이미지 로드 오류:', error);
             profilePreview.src = '../assets/default.webp'; // 오류 시 기본 이미지 사용
         });
-
+    // 프로필 이미지 클릭 시 파일 업로드 입력 클릭 이벤트
     profileImageContainer.addEventListener('click', () => {
         profileUpload.click();
     });
-
+    // 파일 업로드 후 이미지 미리보기
     profileUpload.addEventListener('change', e => {
         const file = e.target.files[0];
         if (file) {
