@@ -26,8 +26,9 @@ class passwordForm {
             this.handlePassword(),
         );
     }
-
+    // 비밀번호 유효성 검사 함수
     validatePassword(password) {
+        // 비밀번호 규칙 (대문자, 소문자, 숫자, 특수문자 각 최소 1개 포함, 길이 8~20자)
         const passwordPattern =
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
         if (!password) return '비밀번호를 입력해주세요.';
@@ -35,14 +36,14 @@ class passwordForm {
             return '비밀번호는 8-20자이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.';
         return '';
     }
-
+    // 비밀번호 확인 유효성 검사 함수
     validatePasswordConfirm(password, passwordConfirm) {
         if (!passwordConfirm) return '비밀번호를 한번 더 입력해주세요.';
         if (password !== passwordConfirm)
             return '비밀번호가 일치하지 않습니다.';
         return '';
     }
-
+    // 비밀번호 입력 필드 유효성 검사
     validatePasswordInput() {
         const error = this.validatePassword(this.passwordInput.value);
         this.passwordError.textContent = error;
@@ -52,7 +53,7 @@ class passwordForm {
             error !== '',
         );
     }
-
+    // 비밀번호 확인 필드 유효성 검사
     validatePasswordConfirmInput() {
         const error = this.validatePasswordConfirm(
             this.passwordInput.value,
@@ -65,7 +66,7 @@ class passwordForm {
             error !== '',
         );
     }
-
+    // 비밀번호 처리 (저장 및 변경)
     async handlePassword() {
         const passwordValidation = this.validatePassword(
             this.passwordInput.value,
