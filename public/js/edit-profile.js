@@ -73,6 +73,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailInput = document.querySelector('input[type="email"]');
     emailInput.value = localStorage.getItem('email'); // 로그인 시 저장된 이메일 불러오기
 
+    confirmBtn.addEventListener('click', () => {
+        const email = localStorage.getItem('email');
+        fetch('http://localhost:3000/auth/withdraw', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+            credentials: 'include',
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('회원 탈퇴가 완료되었습니다.');
+                    localStorage.removeItem('email'); // 로컬 스토리지 데이터 삭제
+                    window.location.href = 'login.html';
+                } else {
+                    alert('회원 탈퇴 처리 중 오류가 발생했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('회원 탈퇴 처리 중 오류가 발생했습니다.');
+            })
+            .finally(() => {
+                confirmPopup.classList.remove('show');
+            });
+    });
+
     saveButton.addEventListener('click', async () => {
         const nickname = nicknameInput.value;
 
