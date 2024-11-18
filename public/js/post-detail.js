@@ -265,7 +265,7 @@ async function toggleLike(postId) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include',
+                // credentials: 'include',
             },
         );
 
@@ -280,13 +280,23 @@ async function toggleLike(postId) {
     }
 }
 
+// 좋아요 수 포맷 맞추기
+function formatLikeCount(count) {
+    if (count >= 10000) {
+        return Math.floor(count / 1000) + 'k';
+    } else if (count >= 1000) {
+        return (Math.floor(count / 100) / 10) + 'k';
+    }
+    return count.toString();
+}
+
 // 좋아요 수를 업데이트하는 함수
 function updateLikeDisplay(isLiked, likeCount) {
     const likesCountElement = document.getElementById('likes-count');
     const likeButton = document.querySelector('.stat-item[data-type="likes"]');
 
     // 좋아요 수 업데이트
-    likesCountElement.innerText = likeCount;
+    likesCountElement.innerText = formatLikeCount(likeCount);
 }
 
 // 좋아요 상태 확인
@@ -295,7 +305,7 @@ async function checkLikeStatus(postId) {
         const response = await fetch(
             `http://localhost:3000/api/likes/check/${postId}`,
             {
-                credentials: 'include',
+                // credentials: 'include',
             },
         );
         if (response.status === 401) {
