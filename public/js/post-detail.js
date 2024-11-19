@@ -285,7 +285,7 @@ function formatLikeCount(count) {
     if (count >= 10000) {
         return Math.floor(count / 1000) + 'k';
     } else if (count >= 1000) {
-        return (Math.floor(count / 100) / 10) + 'k';
+        return Math.floor(count / 100) / 10 + 'k';
     }
     return count.toString();
 }
