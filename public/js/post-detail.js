@@ -171,6 +171,9 @@ function displayComment(comment) {
     commentItem.classList.add('comment-item');
     commentItem.setAttribute('data-comment-id', comment.id);
 
+    const currentUser = localStorage.getItem('nickname');
+    const isAuthor = currentUser === comment.author;
+
     commentItem.innerHTML = `
         <div class="profile-image"></div>
         <div class="comment-content">
@@ -178,23 +181,116 @@ function displayComment(comment) {
                 <div>
                     <span class="commenter-name">${comment.author}</span>
                     <span class="comment-date">${new Date(comment.time).toLocaleString()}</span>
+                    ${comment.lastModified ? `<span class="comment-edited">(수정됨)</span>` : ''}
                 </div>
                 <div class="comment-actions">
-                    <button class="comment-edit-btn">수정</button>
-                    <button class="comment-delete-btn" data-comment-id="${comment.id}">삭제</button>
+                    ${
+                        isAuthor
+                            ? `
+                        <button class="comment-edit-btn">수정</button>
+                        <button class="comment-delete-btn" data-comment-id="${comment.id}">삭제</button>
+                    `
+                            : ''
+                    }
                 </div>
             </div>
             <div class="comment-text">${comment.content}</div>
+            <div class="comment-edit-form" style="display: none;">
+                <textarea class="edit-comment-textarea">${comment.content}</textarea>
+                <div class="edit-buttons">
+                    <button class="edit-comment-save">저장</button>
+                    <button class="edit-comment-cancel">취소</button>
+                </div>
+            </div>
         </div>
     `;
+
     commentList.appendChild(commentItem);
 
-    const deleteBtn = commentItem.querySelector('.comment-delete-btn');
-    deleteBtn.addEventListener('click', () => {
-        const modal = document.getElementById('commentDeleteModal');
-        modal.setAttribute('data-comment-id', comment.id);
-        openModal('commentDeleteModal');
-    });
+    if (isAuthor) {
+        const editBtn = commentItem.querySelector('.comment-edit-btn');
+        const deleteBtn = commentItem.querySelector('.comment-delete-btn');
+
+        editBtn.addEventListener('click', () => toggleEditMode(comment.id));
+        deleteBtn.addEventListener('click', () => {
+            const modal = document.getElementById('commentDeleteModal');
+            modal.setAttribute('data-comment-id', comment.id);
+            openModal('commentDeleteModal');
+        });
+
+        const saveBtn = commentItem.querySelector('.edit-comment-save');
+        const cancelBtn = commentItem.querySelector('.edit-comment-cancel');
+
+        saveBtn.addEventListener('click', () => saveCommentEdit(comment.id));
+        cancelBtn.addEventListener('click', () => toggleEditMode(comment.id));
+    }
+}
+
+// 댓글 수정 모드 토글 함수
+function toggleEditMode(commentId) {
+    const commentItem = document.querySelector(
+        `[data-comment-id="${commentId}"]`,
+    );
+    const commentText = commentItem.querySelector('.comment-text');
+    const editForm = commentItem.querySelector('.comment-edit-form');
+    const editTextarea = commentItem.querySelector('.edit-comment-textarea');
+
+    if (editForm.style.display === 'none') {
+        commentText.style.display = 'none';
+        editForm.style.display = 'block';
+        editTextarea.value = commentText.textContent;
+        editTextarea.focus();
+    } else {
+        commentText.style.display = 'block';
+        editForm.style.display = 'none';
+    }
+}
+
+// 댓글 수정 저장 함수
+async function saveCommentEdit(commentId) {
+    const commentItem = document.querySelector(
+        `[data-comment-id="${commentId}"]`,
+    );
+    const editTextarea = commentItem.querySelector('.edit-comment-textarea');
+    const newContent = editTextarea.value.trim();
+
+    if (!newContent) {
+        alert('댓글 내용을 입력하세요.');
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `http://localhost:3000/api/comments/${commentId}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ content: newContent }),
+            },
+        );
+        if (!response.ok) {
+            throw new Error('댓글 수정에 실패했습니다.');
+        }
+        const commentText = commentItem.querySelector('.comment-text');
+        commentText.textContent = newContent;
+        // 수정됨 표시 추가
+        const commentHeader = commentItem.querySelector(
+            '.comment-header div:first-child',
+        ); // 작성자, 날짜가 있는 곳을 찾기
+        if (!commentItem.querySelector('.comment-edited')) {
+            const editedSpan = document.createElement('span');
+            editedSpan.className = 'comment-edited';
+            editedSpan.textContent = '(수정됨)';
+            commentHeader.appendChild(editedSpan);
+        }
+        // 수정 모드 종료
+        toggleEditMode(commentId);
+    } catch (error) {
+        console.error('댓글 수정 중 오류:', error);
+        alert('댓글 수정에 실패했습니다.');
+    }
 }
 
 // 댓글 삭제 함수
