@@ -26,7 +26,7 @@
                         >
                     </div>
 
-                    <div class="action-buttons">
+                    <div class="action-buttons" style="display: none">
                         <button id="edit-button">수정</button>
                         <button class="post-delete-btn">삭제</button>
                     </div>
@@ -34,7 +34,8 @@
             </div>
 
             <div class="post-content">
-                <div id="content-text"></div>
+                <div id="content-text">내용 로딩 중...</div>
+
                 <div class="post-image"></div>
 
                 <div class="post-stats">
@@ -59,19 +60,21 @@
                 <div class="comment-input">
                     <textarea placeholder="댓글을 입력하세요..."></textarea>
                 </div>
+
                 <div class="comment-submit-container">
                     <button class="comment-submit">댓글 등록</button>
                 </div>
+
                 <div class="comment-divider"></div>
+
                 <div class="comment-list"></div>
             </div>
         </div>
 
-        <!-- 게시글 삭제 모달 -->
         <div id="postDeleteModal" class="modal-backdrop">
             <div class="modal-container">
                 <h2 class="modal-title">게시글을 삭제하시겠습니까?</h2>
-                <p>삭제한 내용은 복구할 수 없습니다.</p>
+                <p class="modal-message">삭제한 내용은 복구할 수 없습니다.</p>
                 <div class="modal-buttons">
                     <button class="btn-cancel">취소</button>
                     <button class="btn-confirm">확인</button>
@@ -79,11 +82,10 @@
             </div>
         </div>
 
-        <!-- 댓글 삭제 모달 -->
         <div id="commentDeleteModal" class="modal-backdrop">
             <div class="modal-container">
                 <h2 class="modal-title">댓글을 삭제하시겠습니까?</h2>
-                <p>삭제한 내용은 복구할 수 없습니다.</p>
+                <p class="modal-message">삭제한 내용은 복구할 수 없습니다.</p>
                 <div class="modal-buttons">
                     <button class="btn-cancel">취소</button>
                     <button class="btn-confirm">확인</button>
@@ -93,7 +95,7 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
         <script src="../components/lottie-header.js"></script>
-        <script src="../js/post-detail.js"></script>
         <script src="../components/main-header.js"></script>
+        <script type="module" src="../js/post-detail.js"></script>
     </body>
 </html>
