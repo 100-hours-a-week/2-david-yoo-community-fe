@@ -9,6 +9,7 @@ async function fetchUserProfile(email) {
     try {
         const response = await fetch(
             `http://localhost:3000/user/profile-image/${email}`,
+            // `http://3.35.132.8:3000/user/profile-image/${email}`,
         );
         if (!response.ok) {
             throw new Error('프로필 가져오기 실패');
@@ -20,18 +21,21 @@ async function fetchUserProfile(email) {
             return {
                 profileImage: 'default.webp',
                 imageUrl: 'http://localhost:3000/uploads/profiles/default.webp',
+                // imageUrl: 'http://3.35.132.8:3000/uploads/profiles/default.webp',
             };
         }
 
         return {
             profileImage: data.profileImage,
             imageUrl: `http://localhost:3000/uploads/profiles/${data.profileImage}`,
+            // imageUrl: `http://3.35.132.8:3000/uploads/profiles/${data.profileImage}`,
         };
     } catch (error) {
         console.error('프로필 가져오기 오류:', error);
         return {
             profileImage: 'default.webp',
             imageUrl: 'http://localhost:3000/uploads/profiles/default.webp',
+            // imageUrl: 'http://3.35.132.8:3000/uploads/profiles/default.webp',
         };
     }
 }
@@ -95,6 +99,7 @@ async function toggleLike(postId) {
         // 서버에 좋아요 상태 변경 요청
         const response = await fetch(
             `http://localhost:3000/likes/${postId}`,
+            // `http://3.35.132.8:3000/likes/${postId}`,
             {
                 method: 'POST',
                 headers: {
@@ -161,6 +166,7 @@ async function checkLikeStatus(postId) {
     try {
         const response = await fetch(
             `http://localhost:3000/likes/check/${postId}?email=${email}`,
+            // `http://3.35.132.8:3000/likes/check/${postId}?email=${email}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -204,11 +210,13 @@ async function fetchPost(postId) {
     try {
         // 조회수 증가 요청
         await fetch(`http://localhost:3000/views/${postId}`, {
+        // await fetch(`http://3.35.132.8:3000/views/${postId}`, {
             method: 'POST',
         });
 
         // 게시글 데이터 요청
         const response = await fetch(`http://localhost:3000/posts/${postId}`);
+        // const response = await fetch(`http://3.35.132.8:3000/posts/${postId}`);
 
         if (!response.ok) {
             throw new Error('게시글 가져오기 실패');
@@ -307,6 +315,7 @@ async function displayPost(post) {
 async function handlePostDelete(postId) {
     try {
         const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+        // const response = await fetch(`http://3.35.132.8:3000/posts/${postId}`, {
             method: 'DELETE',
         });
 
@@ -349,6 +358,7 @@ async function submitComment(postId) {
 
     try {
         const response = await fetch('http://localhost:3000/comments', {
+        // const response = await fetch('http://3.35.132.8:3000/comments', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -405,6 +415,7 @@ async function deleteComment(commentId) {
         const response = await fetch(
             `http://localhost:3000/comments/${commentId}`,
             {
+        // const response = await fetch(`http://3.35.132.8:3000/comments/${commentId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -453,6 +464,7 @@ async function fetchCommentCount(postId) {
         const response = await fetch(
             `http://localhost:3000/comments/${postId}`,
         );
+        // const response = await fetch(`http://3.35.132.8:3000/comments/${postId}`);
         if (!response.ok) throw new Error('댓글 가져오기 실패');
         const comments = await response.json();
         return Array.isArray(comments) ? comments.length : 0;
@@ -471,6 +483,7 @@ async function fetchComments(postId) {
         const response = await fetch(
             `http://localhost:3000/comments/${postId}`,
         );
+        // const response = await fetch(`http://3.35.132.8:3000/comments/${postId}`);
         if (!response.ok) throw new Error('댓글 가져오기 실패');
 
         const data = await response.json();
@@ -504,6 +517,7 @@ async function displayComment(comment) {
     const profileImageUrl =
         profileData?.imageUrl ||
         `http://localhost:3000/uploads/profiles/default.png`;
+    // const profileImageUrl = profileData?.imageUrl || `http://3.35.132.8:3000/uploads/profiles/default.png`;
 
     // 현재 사용자가 작성자인지 확인
     const currentUser = localStorage.getItem('email');
@@ -605,6 +619,7 @@ function setupCommentEventListeners(commentItem, commentId) {
             const response = await fetch(
                 `http://localhost:3000/comments/${commentId}`,
                 {
+            // const response = await fetch(`http://3.35.132.8:3000/comments/${commentId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

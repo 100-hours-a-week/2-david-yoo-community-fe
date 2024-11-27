@@ -5,6 +5,7 @@
 async function fetchPost(postId) {
     try {
         const response = await fetch(`http://localhost:3000/posts/${postId}`);
+        // const response = await fetch(`http://3.35.132.8:3000/posts/${postId}`);
         if (!response.ok) {
             throw new Error('게시글을 가져오는 데 실패했습니다.');
         }
@@ -31,6 +32,7 @@ function populateForm(post) {
     const imagePreview = document.getElementById('imagePreview');
     if (post.image && imagePreview) {
         imagePreview.src = `http://localhost:3000/posts/${post.image}`;
+        // imagePreview.src = `http://3.35.132.8:3000/posts/${post.image}`;
         imagePreview.style.display = 'block';
     }
 
@@ -69,6 +71,7 @@ async function reSubmitPost() {
     try {
         // 서버에 게시글 수정 요청
         const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+        // const response = await fetch(`http://3.35.132.8:3000/posts/${postId}`, {
             method: 'PUT',
             body: formData,
         });

@@ -110,6 +110,7 @@ class LoginForm {
             try {
                 const response = await fetch(
                     'http://localhost:3000/auth/login',
+                    // 'http://3.35.132.8:3000/auth/login',
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
