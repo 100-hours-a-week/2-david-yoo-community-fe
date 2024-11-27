@@ -94,7 +94,7 @@ async function toggleLike(postId) {
 
         // 서버에 좋아요 상태 변경 요청
         const response = await fetch(
-            `http://localhost:3000/api/likes/${postId}`,
+            `http://localhost:3000/likes/${postId}`,
             {
                 method: 'POST',
                 headers: {
@@ -160,7 +160,7 @@ async function checkLikeStatus(postId) {
 
     try {
         const response = await fetch(
-            `http://localhost:3000/api/likes/check/${postId}?email=${email}`,
+            `http://localhost:3000/likes/check/${postId}?email=${email}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -203,7 +203,7 @@ function formatLikeCount(count) {
 async function fetchPost(postId) {
     try {
         // 조회수 증가 요청
-        await fetch(`http://localhost:3000/api/views/${postId}`, {
+        await fetch(`http://localhost:3000/views/${postId}`, {
             method: 'POST',
         });
 
@@ -348,7 +348,7 @@ async function submitComment(postId) {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/comments', {
+        const response = await fetch('http://localhost:3000/comments', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -403,7 +403,7 @@ async function submitComment(postId) {
 async function deleteComment(commentId) {
     try {
         const response = await fetch(
-            `http://localhost:3000/api/comments/${commentId}`,
+            `http://localhost:3000/comments/${commentId}`,
             {
                 method: 'DELETE',
                 headers: {
@@ -451,7 +451,7 @@ async function deleteComment(commentId) {
 async function fetchCommentCount(postId) {
     try {
         const response = await fetch(
-            `http://localhost:3000/api/comments/${postId}`,
+            `http://localhost:3000/comments/${postId}`,
         );
         if (!response.ok) throw new Error('댓글 가져오기 실패');
         const comments = await response.json();
@@ -469,7 +469,7 @@ async function fetchCommentCount(postId) {
 async function fetchComments(postId) {
     try {
         const response = await fetch(
-            `http://localhost:3000/api/comments/${postId}`,
+            `http://localhost:3000/comments/${postId}`,
         );
         if (!response.ok) throw new Error('댓글 가져오기 실패');
 
@@ -603,7 +603,7 @@ function setupCommentEventListeners(commentItem, commentId) {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/comments/${commentId}`,
+                `http://localhost:3000/comments/${commentId}`,
                 {
                     method: 'PUT',
                     headers: {
