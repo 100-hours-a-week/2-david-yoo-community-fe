@@ -19,6 +19,7 @@ async function fetchPosts(page = 1) {
         isLoading = true;
         const response = await fetch(
             `http://localhost:3000/posts?page=${page}&limit=${postsPerPage}`,
+            // `http://3.35.132.8:3000/posts?page=${page}&limit=${postsPerPage}`,
         );
 
         if (!response.ok) {
