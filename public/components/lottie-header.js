@@ -1,3 +1,5 @@
+import { handleLogout } from '../js/logout.js';
+
 class LottieHeader extends HTMLElement {
     constructor() {
         super();
@@ -56,13 +58,14 @@ class LottieHeader extends HTMLElement {
                     <div class="dropdown-menu">
                         <a href="edit-profile.html">회원정보수정</a>
                         <a href="change-password.html">비밀번호수정</a>
-                        <a href="login.html">로그아웃</a>
+                        <a class="logout">로그아웃</a>
                     </div>
                 </div>
             </div>
         `;
         this.initDropdown();
         this.initLottie();
+        this.initLogout();
     }
 
     initDropdown() {
@@ -94,6 +97,11 @@ class LottieHeader extends HTMLElement {
         backButton.addEventListener('click', () => {
             window.location.href = 'posts.html';
         });
+    }
+
+    initLogout() {
+        const logoutButton = this.querySelector('.logout');
+        logoutButton.addEventListener('click', handleLogout);
     }
 }
 

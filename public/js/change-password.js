@@ -119,7 +119,7 @@ class passwordForm {
         if (!passwordValidation && !passwordConfirmValidation) {
             try {
                 const response = await fetch(
-                    'http://localhost:3000/user/change-password',
+                    'http://localhost:3000/user/change-password', //ec2에선 변경
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
