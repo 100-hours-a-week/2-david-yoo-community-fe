@@ -1,3 +1,5 @@
+import { handleLogout } from '../js/logout.js';
+
 class MainHeader extends HTMLElement {
     constructor() {
         super();
@@ -55,12 +57,14 @@ class MainHeader extends HTMLElement {
                     <div class="dropdown-menu">
                         <a href="edit-profile.html">회원정보수정</a>
                         <a href="change-password.html">비밀번호수정</a>
-                        <a href="login.html">로그아웃</a>
+                        <a class="logout">로그아웃</a>
                     </div>
                 </div>
             </div>
+            <script type="module" src="main-header.js"></script>
         `;
         this.initDropdown();
+        this.initLogout();
     }
 
     initDropdown() {
@@ -77,6 +81,11 @@ class MainHeader extends HTMLElement {
                 dropdownMenu.classList.remove('show');
             }
         });
+    }
+
+    initLogout() {
+        const logoutButton = this.querySelector('.logout');
+        logoutButton.addEventListener('click', handleLogout);
     }
 }
 
