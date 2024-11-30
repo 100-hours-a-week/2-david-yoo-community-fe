@@ -30,9 +30,13 @@ class passwordForm {
      * - 비밀번호 변경 버튼 클릭 처리
      */
     initializeEventListeners() {
-        this.passwordInput.addEventListener('input', () =>
-            this.validatePasswordInput(),
-        );
+        this.passwordInput.addEventListener('input', () => {
+            this.validatePasswordInput();
+            // 비밀번호가 변경될 때마다 비밀번호 확인 필드도 검증 -> 먼저 비밀번호 확인을 입력할 경우
+            if (this.passwordConfirmInput.value) {
+                this.validatePasswordConfirmInput();
+            }
+        });
         this.passwordConfirmInput.addEventListener('input', () =>
             this.validatePasswordConfirmInput(),
         );

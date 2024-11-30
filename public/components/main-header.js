@@ -32,8 +32,8 @@ class MainHeader extends HTMLElement {
             const imageUrl = data.profileImage
                 ? `http://localhost:3000/uploads/profiles/${data.profileImage}`
                 : 'http://localhost:3000/uploads/profiles/default.webp';
-                // ? `http://3.35.132.8:3000/uploads/profiles/${data.profileImage}`
-                // : 'http://3.35.132.8:3000/uploads/profiles/default.webp';
+            // ? `http://3.35.132.8:3000/uploads/profiles/${data.profileImage}`
+            // : 'http://3.35.132.8:3000/uploads/profiles/default.webp';
 
             this.renderHeader(imageUrl);
         } catch (error) {
