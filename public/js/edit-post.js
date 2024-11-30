@@ -71,7 +71,7 @@ async function reSubmitPost() {
     try {
         // 서버에 게시글 수정 요청
         const response = await fetch(`http://localhost:3000/posts/${postId}`, {
-        // const response = await fetch(`http://3.35.132.8:3000/posts/${postId}`, {
+            // const response = await fetch(`http://3.35.132.8:3000/posts/${postId}`, {
             method: 'PUT',
             body: formData,
         });

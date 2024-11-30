@@ -210,7 +210,7 @@ async function fetchPost(postId) {
     try {
         // 조회수 증가 요청
         await fetch(`http://localhost:3000/views/${postId}`, {
-        // await fetch(`http://3.35.132.8:3000/views/${postId}`, {
+            // await fetch(`http://3.35.132.8:3000/views/${postId}`, {
             method: 'POST',
         });
 
@@ -225,6 +225,19 @@ async function fetchPost(postId) {
         const data = await response.json();
         if (!data.success || !data.post) {
             throw new Error('잘못된 게시글 데이터');
+        }
+
+        // 작성자의 프로필 정보 가져오기 (닉네임 포함)
+        const profileResponse = await fetch(
+            `http://localhost:3000/user/profile-image/${data.post.author_email}`,
+        );
+        // const profileResponse = await fetch(
+        //     `http://3.35.132.8:3000/user/profile-image/${data.post.author_email}`
+        // );
+        const profileData = await profileResponse.json();
+
+        if (profileData.success && profileData.nickname) {
+            data.post.nickname = profileData.nickname; // 최신 닉네임으로 업데이트
         }
 
         currentPost = data.post;
@@ -315,7 +328,7 @@ async function displayPost(post) {
 async function handlePostDelete(postId) {
     try {
         const response = await fetch(`http://localhost:3000/posts/${postId}`, {
-        // const response = await fetch(`http://3.35.132.8:3000/posts/${postId}`, {
+            // const response = await fetch(`http://3.35.132.8:3000/posts/${postId}`, {
             method: 'DELETE',
         });
 
@@ -358,7 +371,7 @@ async function submitComment(postId) {
 
     try {
         const response = await fetch('http://localhost:3000/comments', {
-        // const response = await fetch('http://3.35.132.8:3000/comments', {
+            // const response = await fetch('http://3.35.132.8:3000/comments', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -415,7 +428,7 @@ async function deleteComment(commentId) {
         const response = await fetch(
             `http://localhost:3000/comments/${commentId}`,
             {
-        // const response = await fetch(`http://3.35.132.8:3000/comments/${commentId}`, {
+                // const response = await fetch(`http://3.35.132.8:3000/comments/${commentId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -619,7 +632,7 @@ function setupCommentEventListeners(commentItem, commentId) {
             const response = await fetch(
                 `http://localhost:3000/comments/${commentId}`,
                 {
-            // const response = await fetch(`http://3.35.132.8:3000/comments/${commentId}`, {
+                    // const response = await fetch(`http://3.35.132.8:3000/comments/${commentId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * 현재 사용자의 프로필 이미지를 서버에서 가져와 표시
      */
     fetch(`http://localhost:3000/user/profile-image/${email}`)
-    // fetch(`http://3.35.132.8:3000/user/profile-image/${email}`)
+        // fetch(`http://3.35.132.8:3000/user/profile-image/${email}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('프로필 이미지 로드 오류:', error);
             profilePreview.src =
                 'http://localhost:3000/uploads/profiles/default.webp';
-        //     profilePreview.src =
-        //         'http://3.35.132.8:3000/uploads/profiles/default.webp';
-        // });
+            //     profilePreview.src =
+            //         'http://3.35.132.8:3000/uploads/profiles/default.webp';
+            // });
         });
 
     // 프로필 이미지 클릭 시 파일 선택 다이얼로그 표시
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const email = localStorage.getItem('email');
         // 서버에 탈퇴 요청
         fetch('http://localhost:3000/auth/withdraw', {
-        // fetch('http://3.35.132.8:3000/auth/withdraw', {
+            // fetch('http://3.35.132.8:3000/auth/withdraw', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const nicknameData = await nicknameResponse.json();
             if (nicknameData.success) {
+                localStorage.setItem('nickname', nickname); // 로컬스토리지 닉네임 업데이트, 댓글등 다른 곳의 닉네임은 로컬스토리지에서 가져옴
                 alert('프로필이 성공적으로 업데이트되었습니다!');
                 location.href = 'posts.html';
             }
