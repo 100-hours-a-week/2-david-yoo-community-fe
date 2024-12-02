@@ -5,6 +5,11 @@
 ## 프로젝트 소개
 순수 JavaScript와 HTML/CSS를 사용하여 구현한 커뮤니티 게시판입니다. 사용자 인증, 게시글 CRUD, 댓글, 좋아요 등 커뮤니티의 기본적인 기능들을 제공합니다.
 
+## 기술 스택
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white"/>
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/>
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white"/>
+
 ## 주요 기능
 - **사용자 인증**
   - 회원가입 / 로그인
