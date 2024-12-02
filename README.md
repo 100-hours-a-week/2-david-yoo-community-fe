@@ -6,9 +6,16 @@
 순수 JavaScript와 HTML/CSS를 사용하여 구현한 커뮤니티 게시판입니다. 사용자 인증, 게시글 CRUD, 댓글, 좋아요 등 커뮤니티의 기본적인 기능들을 제공합니다.
 
 ## 기술 스택
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white"/>
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/>
-<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white"/>
+
+<div style="display:flex;gap:30px;flex-wrap:wrap;">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/>
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white"/>
+</div>
+
+- HTML5
+- CSS3
+- JavaScript (ES6+)
 
 ## 주요 기능
 - **사용자 인증**
@@ -33,11 +40,6 @@
   - 게시글 좋아요/취소
   - 좋아요 수 표시
 
-## 기술 스택
-- Frontend
-  - HTML5
-  - CSS3
-  - Vanilla JavaScript (ES6+)
 
 ## JavaScript 파일 설명
 - `login.js`: 로그인 처리
