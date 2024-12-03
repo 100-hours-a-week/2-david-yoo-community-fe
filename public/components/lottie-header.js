@@ -16,7 +16,7 @@ class LottieHeader extends HTMLElement {
         try {
             const response = await fetch(
                 `http://localhost:3000/user/profile-image/${email}`,
-                // `http://3.35.132.8:3000/user/profile-image/${email}`,
+                // `http://43.203.237.161:3000/user/profile-image/${email}`,
                 {
                     headers: {
                         Accept: 'application/json',
@@ -32,8 +32,8 @@ class LottieHeader extends HTMLElement {
             const imageUrl = data.profileImage
                 ? `http://localhost:3000/uploads/profiles/${data.profileImage}`
                 : 'http://localhost:3000/uploads/profiles/default.webp';
-            // ? `http://3.35.132.8:3000/uploads/profiles/${data.profileImage}`
-            // : 'http://3.35.132.8:3000/uploads/profiles/default.webp';
+            // ? `http://43.203.237.161:3000/uploads/profiles/${data.profileImage}`
+            // : 'http://43.203.237.161:3000/uploads/profiles/default.webp';
 
             this.renderHeader(imageUrl);
         } catch (error) {
@@ -45,7 +45,7 @@ class LottieHeader extends HTMLElement {
     renderDefaultHeader() {
         this.renderHeader(
             'http://localhost:3000/uploads/profiles/default.webp',
-            // 'http://3.35.132.8:3000/uploads/profiles/default.webp',
+            // 'http://43.203.237.161:3000/uploads/profiles/default.webp',
         );
     }
 
