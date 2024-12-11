@@ -18,8 +18,8 @@ async function fetchPosts(page = 1) {
     try {
         isLoading = true;
         const response = await fetch(
-            `http://localhost:3000/posts?page=${page}&limit=${postsPerPage}`,
-            // `http://43.203.237.161:3000/posts?page=${page}&limit=${postsPerPage}`,
+            //`http://localhost:3000/posts?page=${page}&limit=${postsPerPage}`,
+            `/api/posts?page=${page}&limit=${postsPerPage}`,
         );
 
         if (!response.ok) {
@@ -82,7 +82,7 @@ function displayPosts(posts) {
 
 /**
  * 무한 스크롤 처리 함수
- * 페이지 하단에 도달하면 추가 게시글 로드
+ * 페이지 하단에 도달하면 추가 게시��� 로드
  */
 function handleScroll() {
     if (

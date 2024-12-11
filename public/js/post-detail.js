@@ -1,5 +1,6 @@
 import { formatKoreanTime } from '../utils/timeUtils.js';
 
+const CLOUDFRONT_DOMAIN = 'd2t2xvt037aek.cloudfront.net';
 /**
  * 사용자 프로필 정보를 가져오는 함수
  * @param {string} email - 사용자 이메일
@@ -7,10 +8,12 @@ import { formatKoreanTime } from '../utils/timeUtils.js';
  */
 async function fetchUserProfile(email) {
     try {
-        const response = await fetch(
-            `http://localhost:3000/user/profile-image/${email}`,
-            // `http://43.203.237.161:3000/user/profile-image/${email}`,
-        );
+        const response = await fetch(`/api/user/profile-image/${email}`, {
+           headers: {
+               Accept: 'application/json',
+               'Content-Type': 'application/json',
+           },
+       });
         if (!response.ok) {
             throw new Error('프로필 가져오기 실패');
         }
@@ -20,22 +23,22 @@ async function fetchUserProfile(email) {
         if (!data.profileImage || data.profileImage === 'default.webp') {
             return {
                 profileImage: 'default.webp',
-                imageUrl: 'http://localhost:3000/uploads/profiles/default.webp',
-                // imageUrl: 'http://43.203.237.161:3000/uploads/profiles/default.webp',
+                // imageUrl: 'http://localhost:3000/uploads/profiles/default.webp',
+                imageUrl: `https://${CLOUDFRONT_DOMAIN}/uploads/profiles/default.webp`,
             };
         }
 
         return {
             profileImage: data.profileImage,
-            imageUrl: `http://localhost:3000/uploads/profiles/${data.profileImage}`,
-            // imageUrl: `http://43.203.237.161:3000/uploads/profiles/${data.profileImage}`,
+            // imageUrl: `http://localhost:3000/uploads/profiles/${data.profileImage}`,
+            imageUrl: `https://${CLOUDFRONT_DOMAIN}/uploads/profiles/${data.profileImage}`,
         };
     } catch (error) {
         console.error('프로필 가져오기 오류:', error);
         return {
             profileImage: 'default.webp',
-            imageUrl: 'http://localhost:3000/uploads/profiles/default.webp',
-            // imageUrl: 'http://43.203.237.161:3000/uploads/profiles/default.webp',
+            // imageUrl: 'http://localhost:3000/uploads/profiles/default.webp',
+            imageUrl: `https://${CLOUDFRONT_DOMAIN}/uploads/profiles/default.webp`,
         };
     }
 }
@@ -98,8 +101,8 @@ async function toggleLike(postId) {
 
         // 서버에 좋아요 상태 변경 요청
         const response = await fetch(
-            `http://localhost:3000/likes/${postId}`,
-            // `http://43.203.237.161:3000/likes/${postId}`,
+            // `http://localhost:3000/likes/${postId}`,
+            `/api/likes/${postId}`,
             {
                 method: 'POST',
                 headers: {
@@ -165,8 +168,8 @@ async function checkLikeStatus(postId) {
 
     try {
         const response = await fetch(
-            `http://localhost:3000/likes/check/${postId}?email=${email}`,
-            // `http://43.203.237.161:3000/likes/check/${postId}?email=${email}`,
+            // `http://localhost:3000/likes/check/${postId}?email=${email}`,
+            `/api/likes/check/${postId}?email=${email}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -209,14 +212,14 @@ function formatLikeCount(count) {
 async function fetchPost(postId) {
     try {
         // 조회수 증가 요청
-        await fetch(`http://localhost:3000/views/${postId}`, {
-            // await fetch(`http://43.203.237.161:3000/views/${postId}`, {
+        // await fetch(`http://localhost:3000/views/${postId}`, {
+        await fetch(`/api/views/${postId}`, {
             method: 'POST',
         });
 
         // 게시글 데이터 요청
-        const response = await fetch(`http://localhost:3000/posts/${postId}`);
-        // const response = await fetch(`http://43.203.237.161:3000/posts/${postId}`);
+        // const response = await fetch(`http://localhost:3000/posts/${postId}`);
+        const response = await fetch(`/api/posts/${postId}`);
 
         if (!response.ok) {
             throw new Error('게시글 가져오기 실패');
@@ -228,12 +231,12 @@ async function fetchPost(postId) {
         }
 
         // 작성자의 프로필 정보 가져오기 (닉네임 포함)
-        const profileResponse = await fetch(
-            `http://localhost:3000/user/profile-image/${data.post.author_email}`,
-        );
         // const profileResponse = await fetch(
-        //     `http://43.203.237.161:3000/user/profile-image/${data.post.author_email}`
+        //     `http://localhost:3000/user/profile-image/${data.post.author_email}`,
         // );
+        const profileResponse = await fetch(
+            `/api/user/profile-image/${data.post.author_email}`
+        );
         const profileData = await profileResponse.json();
 
         if (profileData.success && profileData.nickname) {
@@ -252,7 +255,7 @@ async function fetchPost(postId) {
                 currentUserEmail === currentPost.author_email ? 'flex' : 'none';
         }
 
-        // 댓글 수 업데이트
+        // 댓글 수 업데��트
         const commentsCount = document.getElementById('comments-count');
         if (commentsCount) {
             commentsCount.textContent = currentPost.comments_count || 0;
@@ -311,9 +314,9 @@ async function displayPost(post) {
     const postImageContainer = document.querySelector('.post-image');
     if (postImageContainer && post.image) {
         postImageContainer.innerHTML = `
-            <img src="http://localhost:3000/uploads/${post.image}" 
-                 alt="게시글 이미지"
-                 style="max-width: 100%; max-height: 100%; ">
+            <img src="https://${CLOUDFRONT_DOMAIN}/uploads/posts/${post.image}" 
+                alt="게시글 이미지"
+                style="max-width: 100%; max-height: 100%; ">
         `;
         postImageContainer.style.display = 'block';
     } else if (postImageContainer) {
@@ -327,8 +330,8 @@ async function displayPost(post) {
  */
 async function handlePostDelete(postId) {
     try {
-        const response = await fetch(`http://localhost:3000/posts/${postId}`, {
-            // const response = await fetch(`http://43.203.237.161:3000/posts/${postId}`, {
+        // const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+        const response = await fetch(`/api/posts/${postId}`, {
             method: 'DELETE',
         });
 
@@ -370,8 +373,8 @@ async function submitComment(postId) {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/comments', {
-            // const response = await fetch('http://43.203.237.161:3000/comments', {
+        // const response = await fetch('http://localhost:3000/comments', {
+        const response = await fetch('/api/comments', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -425,10 +428,10 @@ async function submitComment(postId) {
  */
 async function deleteComment(commentId) {
     try {
-        const response = await fetch(
-            `http://localhost:3000/comments/${commentId}`,
-            {
-                // const response = await fetch(`http://43.203.237.161:3000/comments/${commentId}`, {
+        // const response = await fetch(
+        //     `http://localhost:3000/comments/${commentId}`,
+        //     {
+            const response = await fetch(`/api/comments/${commentId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -474,10 +477,10 @@ async function deleteComment(commentId) {
  */
 async function fetchCommentCount(postId) {
     try {
-        const response = await fetch(
-            `http://localhost:3000/comments/${postId}`,
-        );
-        // const response = await fetch(`http://43.203.237.161:3000/comments/${postId}`);
+        // const response = await fetch(
+        //     `http://localhost:3000/comments/${postId}`,
+        // );
+        const response = await fetch(`/api/comments/${postId}`);
         if (!response.ok) throw new Error('댓글 가져오기 실패');
         const comments = await response.json();
         return Array.isArray(comments) ? comments.length : 0;
@@ -493,10 +496,10 @@ async function fetchCommentCount(postId) {
  */
 async function fetchComments(postId) {
     try {
-        const response = await fetch(
-            `http://localhost:3000/comments/${postId}`,
-        );
-        // const response = await fetch(`http://43.203.237.161:3000/comments/${postId}`);
+        // const response = await fetch(
+        //     `http://localhost:3000/comments/${postId}`,
+        // );
+        const response = await fetch(`/api/comments/${postId}`);
         if (!response.ok) throw new Error('댓글 가져오기 실패');
 
         const data = await response.json();
@@ -528,9 +531,8 @@ async function displayComment(comment) {
     // 프로필 이미지 가져오기
     const profileData = await fetchUserProfile(comment.author_email);
     const profileImageUrl =
-        profileData?.imageUrl ||
-        `http://localhost:3000/uploads/profiles/default.png`;
-    // const profileImageUrl = profileData?.imageUrl || `http://43.203.237.161:3000/uploads/profiles/default.png`;
+        // `http://localhost:3000/uploads/profiles/default.png`;
+        profileData?.imageUrl || `https://${CLOUDFRONT_DOMAIN}/uploads/profiles/default.webp`;
 
     // 현재 사용자가 작성자인지 확인
     const currentUser = localStorage.getItem('email');
@@ -629,10 +631,10 @@ function setupCommentEventListeners(commentItem, commentId) {
         }
 
         try {
-            const response = await fetch(
-                `http://localhost:3000/comments/${commentId}`,
-                {
-                    // const response = await fetch(`http://43.203.237.161:3000/comments/${commentId}`, {
+            // const response = await fetch(
+            //     `http://localhost:3000/comments/${commentId}`,
+            //     {
+                const response = await fetch(`/api/comments/${commentId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -730,7 +732,7 @@ function initializeCommentModals() {
             await deleteComment(commentId);
             closeModal('commentDeleteModal');
         } catch (error) {
-            alert('댓글 삭제에 실패했습니다.');
+            alert('댓글 삭제에 실패��습니다.');
             closeModal('commentDeleteModal');
         }
     });
@@ -770,7 +772,7 @@ function setupEventListeners(postId) {
         likeButton.addEventListener('click', () => toggleLike(postId));
     }
 
-    // 수정 버튼 이벤트
+    // ���정 버튼 이벤트
     const editButton = document.getElementById('edit-button');
     if (editButton) {
         editButton.addEventListener('click', () => {

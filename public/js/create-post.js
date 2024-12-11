@@ -61,11 +61,11 @@ const submitPost = async () => {
     try {
         // 서버에 게시글 등록 요청
         const response = await fetch(
-            'http://localhost:3000/posts/create-post',
-            {
+            //'http://localhost:3000/posts/create-post',
+            //{
                 // const response = await fetch(
-                //     'http://43.203.237.161:3000/posts/create-post',
-                //     {
+            '/api/posts/create-post',
+            {
                 method: 'POST',
                 body: formData,
                 credentials: 'include',
