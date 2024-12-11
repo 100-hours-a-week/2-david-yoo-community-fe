@@ -4,8 +4,8 @@
  */
 async function fetchPost(postId) {
     try {
-        const response = await fetch(`http://localhost:3000/posts/${postId}`);
-        // const response = await fetch(`http://43.203.237.161:3000/posts/${postId}`);
+        //const response = await fetch(`http://localhost:3000/posts/${postId}`);
+        const response = await fetch(`/api/posts/${postId}`);
         if (!response.ok) {
             throw new Error('게시글을 가져오는 데 실패했습니다.');
         }
@@ -31,8 +31,8 @@ function populateForm(post) {
     // 이미지 미리보기 처리
     const imagePreview = document.getElementById('imagePreview');
     if (post.image && imagePreview) {
-        imagePreview.src = `http://localhost:3000/posts/${post.image}`;
-        // imagePreview.src = `http://43.203.237.161:3000/posts/${post.image}`;
+        //imagePreview.src = `http://localhost:3000/posts/${post.image}`;
+        imagePreview.src = `/api/posts/${post.image}`;
         imagePreview.style.display = 'block';
     }
 
@@ -70,8 +70,8 @@ async function reSubmitPost() {
 
     try {
         // 서버에 게시글 수정 요청
-        const response = await fetch(`http://localhost:3000/posts/${postId}`, {
-            // const response = await fetch(`http://43.203.237.161:3000/posts/${postId}`, {
+        //const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+        const response = await fetch(`/api/posts/${postId}`, {
             method: 'PUT',
             body: formData,
         });

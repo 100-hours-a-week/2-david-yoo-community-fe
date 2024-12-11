@@ -13,27 +13,25 @@ document.addEventListener('DOMContentLoaded', function () {
     /**
      * 현재 사용자의 프로필 이미지를 서버에서 가져와 표시
      */
-    fetch(`http://localhost:3000/user/profile-image/${email}`)
-        // fetch(`http://43.203.237.161:3000/user/profile-image/${email}`)
+    //fetch(`http://localhost:3000/user/profile-image/${email}`)
+    fetch(`/api/user/profile-image/${email}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 // 프로필 이미지 URL 설정 (없으면 기본 이미지 사용)
-                const imageUrl = data.profileImage
-                    ? `http://localhost:3000/uploads/profiles/${data.profileImage}`
-                    : 'http://localhost:3000/uploads/profiles/default.webp';
-                // const imageUrl = data.profileImage
-                //     ? `http://43.203.237.161:3000/uploads/profiles/${data.profileImage}`
-                //     : 'http://43.203.237.161:3000/uploads/profiles/default.webp';
+               // const imageUrl = data.profileImage
+                 //   ? `http://localhost:3000/uploads/profiles/${data.profileImage}`
+                   // : 'http://localhost:3000/uploads/profiles/default.webp';
+                const imageUrl = data.imageUrl || `https://${CLOUDFRONT_DOMAIN}/uploads/profiles/default.webp`;
                 profilePreview.src = imageUrl;
             }
         })
         .catch(error => {
             console.error('프로필 이미지 로드 오류:', error);
             profilePreview.src =
-                'http://localhost:3000/uploads/profiles/default.webp';
+               // 'http://localhost:3000/uploads/profiles/default.webp';
             //     profilePreview.src =
-            //         'http://43.203.237.161:3000/uploads/profiles/default.webp';
+                  '/api/uploads/profiles/default.webp';
             // });
         });
 
@@ -94,8 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
     confirmBtn.addEventListener('click', () => {
         const email = localStorage.getItem('email');
         // 서버에 탈퇴 요청
-        fetch('http://localhost:3000/auth/withdraw', {
-            // fetch('http://43.203.237.161:3000/auth/withdraw', {
+        // fetch('http://localhost:3000/auth/withdraw', {
+        fetch('/api/auth/withdraw', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -126,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const saveButton = document.getElementById('saveButton');
 
     /**
-     * 프로필 정보 저장 처리
+     * 프로�� 정보 저장 처리
      */
     saveButton.addEventListener('click', async () => {
         const nickname = nicknameInput.value;
@@ -144,8 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 reader.readAsDataURL(profileUpload.files[0]);
                 reader.onload = async () => {
                     await fetch(
-                        'http://localhost:3000/user/update-profile-image',
-                        // 'http://43.203.237.161:3000/user/update-profile-image',
+                        // 'http://localhost:3000/user/update-profile-image',
+                        '/api/user/update-profile-image',
                         {
                             method: 'POST',
                             headers: {
@@ -162,8 +160,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // 닉네임 업데이트
             const nicknameResponse = await fetch(
-                'http://localhost:3000/user/update-nickname',
-                // 'http://43.203.237.161:3000/user/update-nickname',
+                //'http://localhost:3000/user/update-nickname',
+                '/api/user/update-nickname',
                 {
                     method: 'POST',
                     headers: {
@@ -178,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const nicknameData = await nicknameResponse.json();
             if (nicknameData.success) {
-                localStorage.setItem('nickname', nickname); // 로컬스토리지 닉네임 업데이트, 댓글등 다른 곳의 닉네임은 로컬스토리지에서 가져옴
+                localStorage.setItem('nickname', nickname); // 로컬스토리지 닉���임 업데이트, 댓글등 다른 곳의 닉네임은 로컬스토리지에서 가져옴
                 alert('프로필이 성공적으로 업데이트되었습니다!');
                 location.href = 'posts.html';
             }

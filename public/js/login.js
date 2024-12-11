@@ -59,7 +59,7 @@ class LoginForm {
     validatePassword(password) {
         // 비밀번호 규칙: 8-20자, 대소문자, 숫자, 특수문자 각 1개 이상 포함
         const passwordPattern =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+            /(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/;
         if (!password) return '비밀번호를 입력해주세요.';
         if (!passwordPattern.test(password)) {
             return '비밀번호는 8-20자이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.';
@@ -109,8 +109,8 @@ class LoginForm {
         if (!emailValidation && !passwordValidation) {
             try {
                 const response = await fetch(
-                    'http://localhost:3000/auth/login',
-                    // 'http://43.203.237.161:3000/auth/login',
+                    //'http://localhost:3000/auth/login',
+                    '/api/auth/login',
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },

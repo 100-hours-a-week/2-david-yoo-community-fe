@@ -27,7 +27,7 @@ class passwordForm {
     /**
      * 이벤트 리스너들을 등록하는 메서드
      * - 실시간 비밀번호 유효성 검사
-     * - 비밀번호 변경 버튼 클릭 처리
+     * - 비��번호 변경 버튼 클릭 처리
      */
     initializeEventListeners() {
         this.passwordInput.addEventListener('input', () => {
@@ -51,9 +51,9 @@ class passwordForm {
      * @returns {string} 오류 메시지 (유효한 경우 빈 문자열)
      */
     validatePassword(password) {
-        // 비밀번호 규칙: 8-20자, 대소문자, 숫자, 특수문자 각 1개 이상 포함
+        // 비밀번호 규칙: 8-20자, 대소문자, 숫자, 특수문자 각 1개 이�� 포함
         const passwordPattern =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+            /(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/;
         if (!password) return '비밀번호를 입력해주세요.';
         if (!passwordPattern.test(password)) {
             return '비밀번호는 8-20자이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.';
@@ -75,7 +75,7 @@ class passwordForm {
     }
 
     /**
-     * 비밀번호 입력 필드 유효성 검사 실행 및 UI 업데이트
+     * 비밀번호 입력 필드 유효성 검사 실행 및 UI ���데이트
      */
     validatePasswordInput() {
         const error = this.validatePassword(this.passwordInput.value);
@@ -106,7 +106,7 @@ class passwordForm {
     /**
      * 비밀번호 변경 처리 함수
      * - 입력값 유효성 검사
-     * - 서버 비밀번호 변경 요청
+     * - ���버 비밀번호 변경 요청
      * - 성공 시 페이지 이동
      */
     async handlePassword() {
@@ -123,8 +123,8 @@ class passwordForm {
         if (!passwordValidation && !passwordConfirmValidation) {
             try {
                 const response = await fetch(
-                    'http://localhost:3000/user/change-password',
-                    // 'http://43.203.237.161:3000/user/change-password',
+                    //'http://localhost:3000/user/change-password',
+                    '/api/user/change-password',
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },

@@ -1,7 +1,8 @@
 export async function handleLogout() {
     try {
-        const response = await fetch('http://localhost:3000/auth/logout', {
-            // 'http://43.203.237.161:3000/auth/logout'
+        const response = await fetch(
+                //'http://localhost:3000/auth/logout', {
+          '/api/auth/logout', {
             method: 'POST',
             credentials: 'include',
         });
